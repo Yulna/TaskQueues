@@ -32,7 +32,7 @@ bool Villager::Die()
 {
 	if (action_type != DIE && action_type != DISAPPEAR)
 	{
-		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
+
 		App->buff_manager->RemoveTargetBuffs(this);
 		action_type = DIE;
 
@@ -159,7 +159,6 @@ bool Villager::SaveResources()
 	}
 
 	//Store all the resources collected in the player bag
-	App->player->game_panel->AddResource(current_resources, resource_collected_type);
 
 	//Reset all the resources data so the next action will not be affected for it
 	this->ResetResourcesData();

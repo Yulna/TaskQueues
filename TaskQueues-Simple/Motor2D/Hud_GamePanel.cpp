@@ -6,7 +6,6 @@
 #include "j1Window.h"
 #include "j1Scene.h"
 #include "j1Player.h"
-#include "j1Menu.h"
 #include "j1AI.h"
 #include "j1EntitiesManager.h"
 
@@ -217,7 +216,6 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 			App->player->Disable();
 			App->AI->Disable();
 			App->entities_manager->Disable();
-			App->menu->Enable();
 		}
 		if (ui_element == cancel_game_menu)
 		{

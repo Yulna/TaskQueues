@@ -19,7 +19,6 @@ class j1Textures;
 class j1Audio;
 class j1FileSystem;
 class j1Scene;
-class j1Menu;
 class j1Map;
 class j1Fonts;
 class j1Gui;
@@ -105,7 +104,6 @@ public:
 	j1Textures*			tex = NULL;
 	j1Audio*			audio = NULL;
 	j1Scene*			scene = NULL;
-	j1Menu*				menu = NULL;
 	j1FileSystem*		fs = NULL;
 	j1Map*				map = NULL;
 	j1Fonts*			font = NULL;

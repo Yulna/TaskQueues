@@ -1069,10 +1069,6 @@ void Unit::DirectDamage(uint damage)
 
 bool Unit::Die()
 {
-	if (GetDiplomacy() == DIPLOMACY::ALLY)
-	{
-		App->player->game_panel->IncreaseDeathAllies();
-	}
 	if (GetDiplomacy() == DIPLOMACY::ENEMY)
 	{
 		//App->player->game_panel->IncreaseDeathEnemies();
@@ -1085,7 +1081,6 @@ bool Unit::Die()
 				lastenemy = false;
 			it++;
 		}
-		if (lastenemy && !App->debug_mode) App->player->game_panel->DoWin();
 	}
 
 
@@ -1093,7 +1088,6 @@ bool Unit::Die()
 	{
 		App->buff_manager->RemoveTargetBuffs(this);
 		action_type = DIE;
-		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
 		App->entities_manager->units_quadtree.Exteract(this,&this->GetPosition());
 		App->animator->UnitPlay(this);
 	}
@@ -1106,11 +1100,7 @@ bool Unit::Die()
 		}
 		else
 		{
-			if (GetDiplomacy() == DIPLOMACY::ENEMY)
-			{
-				App->player->game_panel->IncreaseDeathEnemies();
-			}
-			GetWorker()->Reset();
+					GetWorker()->Reset();
 			App->entities_manager->DeleteEntity(this);
 			return true;
 		}
@@ -1713,11 +1703,6 @@ bool Building::Die()
 {
 	if (action_type != DISAPPEAR)
 	{
-		if (building_type == TOWN_CENTER)
-		{
-			//Do lose condition
-			App->player->game_panel->DoLose();
-		}
 
 		action_type = DISAPPEAR;
 		if (building_type == TOWN_CENTER)building_type = RUBBLE_FOUR;

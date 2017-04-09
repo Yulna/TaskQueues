@@ -17,7 +17,7 @@
 #include "Hud_GamePanel.h"
 #include "j1SoundManager.h"
 #include "j1AI.h"
-#include "j1Menu.h"
+
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -33,8 +33,7 @@ j1Scene::~j1Scene()
 void j1Scene::Enable()
 {
 	active = true;
-	LoadScene();
-	App->sound->PlayMusicAudio(SOUND_TYPE::INGAME_SONG);
+	
 }
 
 // Called before render is available
@@ -46,6 +45,8 @@ bool j1Scene::Awake(pugi::xml_node& config)
 		map_folder.push_back(std::string(map_tmx.child_value()));
 
 	}
+
+
 
 	bool ret = true;
 	return ret;
@@ -65,6 +66,14 @@ bool j1Scene::Start()
 	App->map->CreateWalkabilityMap(width, height);
 	App->pathfinding->SetMap(width, height);
 	// ----------------------------------------------------
+
+	LoadScene();
+	App->sound->PlayMusicAudio(SOUND_TYPE::INGAME_SONG);
+
+	App->gui->ChangeMouseTexture(DEFAULT);
+	App->player->Enable();
+	App->entities_manager->Enable();
+	App->AI->Enable();
 
 	return true;
 }
@@ -126,7 +135,8 @@ bool j1Scene::PostUpdate()
 		App->player->Disable();
 		App->AI->Disable();
 		App->entities_manager->Disable();
-		App->menu->Enable();
+		App->SetQuit();
+
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
@@ -203,7 +213,6 @@ bool j1Scene::LoadScene()
 			Unit* new_unit = App->entities_manager->GenerateUnit(unit_type, diplomacy, true);
 			iPoint unit_pos = App->map->MapToWorldCenter(entity_node.attribute("x_pos").as_uint(), entity_node.attribute("y_pos").as_uint());
 			new_unit->SetPosition(unit_pos.x, unit_pos.y);
-			App->player->game_panel->IncressPopulation(1);
 		}
 		else if (type == RESOURCE)
 		{

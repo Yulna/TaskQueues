@@ -84,9 +84,6 @@
     <ClCompile Include="j1Player.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="j1Menu.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="UI_Fixed_Button.cpp">
       <Filter>UserInteraface\UI_Elements</Filter>
     </ClCompile>
@@ -228,9 +225,6 @@
     </ClInclude>
     <ClInclude Include="j1Player.h">
       <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Menu.h">
-      <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="UI_Fixed_Button.h">
       <Filter>UserInteraface\UI_Elements</Filter>

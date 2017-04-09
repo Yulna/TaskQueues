@@ -68,18 +68,8 @@ private:
 
 	std::string				civilization;
 
-	UI_Image*				game_hud = nullptr;
 
-public: /*This is temporal*/
 
-	//HUD Panels
-	Selection_Panel*		selection_panel = nullptr;
-	Game_Panel*				game_panel = nullptr;
-	Action_Panel*			action_panel = nullptr;
-
-public:
-
-	//Functionality -------------------
 
 };
 #endif // !_J1PLAYER_H_

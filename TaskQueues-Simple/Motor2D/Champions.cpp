@@ -511,10 +511,8 @@ bool Warrior::Die()
 {
 	if (action_type != DIE && action_type != DISAPPEAR)
 	{
-		App->player->action_panel->HeroIsDead(this->unit_type);
 		App->buff_manager->RemoveTargetBuffs(this);
 		action_type = DIE;
-		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
 		App->entities_manager->units_quadtree.Exteract(this,&this->position);
 		App->animator->UnitPlay(this);
 	}

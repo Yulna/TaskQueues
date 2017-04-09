@@ -76,8 +76,6 @@ bool j1Window::Awake(pugi::xml_node& config)
 		}
 	}
 
-	//Lock cursor on screen
-	SDL_SetWindowGrab(window, SDL_TRUE);
 
 	return ret;
 }

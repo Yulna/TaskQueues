@@ -14,7 +14,7 @@ public:
 	// Destructor
 	virtual ~j1Scene();
 
-	void Init() { active = false; }
+	void Init() { active = true; }
 
 	void Enable();
 
