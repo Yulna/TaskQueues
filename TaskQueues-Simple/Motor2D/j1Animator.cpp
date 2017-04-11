@@ -944,11 +944,7 @@ bool j1Animator::UnitPlay(Unit* target)
 		//Compare block unit id
 		if (block->GetId() == target->GetUnitType())
 		{
-			if (block->GetId() == VILLAGER)
-			{
-				//If the unit is a villager we need to check the item that is carrying
-				block = block->SearchId(((Villager*)target)->GetItemType());
-			}
+		
 			//Compare block action id
 			block = block->SearchId(target->GetAction());
 			//If action block is found search the correct direction block

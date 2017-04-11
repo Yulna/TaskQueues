@@ -8,15 +8,13 @@
 #include "j1Window.h"
 #include "j1Gui.h"
 #include "j1Map.h"
-#include "j1Console.h"
+
 #include "j1EntitiesManager.h"
 #include "j1Animator.h"
 #include "j1Pathfinding.h"
 #include "j1FileSystem.h"
 #include "j1Player.h"
-#include "Hud_GamePanel.h"
 #include "j1SoundManager.h"
-#include "j1AI.h"
 
 
 j1Scene::j1Scene() : j1Module()
@@ -73,7 +71,6 @@ bool j1Scene::Start()
 	App->gui->ChangeMouseTexture(DEFAULT);
 	App->player->Enable();
 	App->entities_manager->Enable();
-	App->AI->Enable();
 
 	return true;
 }
@@ -133,7 +130,6 @@ bool j1Scene::PostUpdate()
 	{
 		App->scene->Disable();
 		App->player->Disable();
-		App->AI->Disable();
 		App->entities_manager->Disable();
 		App->SetQuit();
 

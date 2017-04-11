@@ -10,11 +10,8 @@
 #include "j1EntitiesManager.h"
 #include "j1ActionManager.h"
 #include "j1Player.h"
-#include "j1BuffManager.h"
 
 #include "Actions_Unit.h"
-
-#include "Hud_GamePanel.h"
 
 ///Class Entity ---------------------------------
 //Constructors ========================
@@ -1039,7 +1036,6 @@ bool Unit::AttackBuilding(Building ** target)
 			action_type = IDLE;
 			App->animator->UnitPlay(this);
 		}
-		if (act != DIE && act != DISAPPEAR)(*target)->AddPriorizedAction((Action*)App->action_manager->DieBuildngAction((*target)));
 		return true;
 	}
 
@@ -1086,7 +1082,6 @@ bool Unit::Die()
 
 	if (action_type != DIE && action_type != DISAPPEAR)
 	{
-		App->buff_manager->RemoveTargetBuffs(this);
 		action_type = DIE;
 		App->entities_manager->units_quadtree.Exteract(this,&this->GetPosition());
 		App->animator->UnitPlay(this);
@@ -1108,10 +1103,7 @@ bool Unit::Die()
 	return false;
 }
 
-void Unit::Stun(uint time)
-{
-	action_worker.AddPriorizedAction(App->action_manager->StunAction(this, time));
-}
+
 
 COLLISION_TYPE Unit::CheckColision(const Unit * current, const Unit * other)
 {

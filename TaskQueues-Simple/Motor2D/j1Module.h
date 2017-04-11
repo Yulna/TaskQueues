@@ -10,8 +10,6 @@ class j1App;
 class UI_Element;
 enum GUI_INPUT;
 enum CONSOLE_COMMAND_TYPE;
-class Cvar;
-class Command;
 
 class j1Module
 {
@@ -91,15 +89,6 @@ public:
 
 	}
 
-	//Console functions ---------------
-	virtual void Console_Cvar_Input(Cvar* cvar, Command* command, std::string* input)
-	{
-
-	}
-	virtual void Console_Command_Input(Command* command, Cvar* cvar, std::string* input)
-	{
-
-	}
 
 public:
 

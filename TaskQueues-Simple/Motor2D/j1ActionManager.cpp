@@ -106,50 +106,7 @@ DieUnitAction * j1ActionManager::DieAction(Unit * actor)
 	return action;
 }
 
-DieBuildingAction * j1ActionManager::DieBuildngAction(Building* actor)
-{
-	//Generate a new die action definition
-	DieBuildingAction* action = new DieBuildingAction(actor);
 
-	//Add the new action at the action manager
-	all_actions.push_back(action);
-
-	return action;
-}
-
-StunUnitAction * j1ActionManager::StunAction(Unit * actor, uint time)
-{
-	//Generate a new move action definition
-	StunUnitAction* action = new StunUnitAction(actor, time);
-
-	//Add the new action at the action manager
-	all_actions.push_back(action);
-
-	return action;
-}
-
-RecollectVillagerAction* j1ActionManager::RecollectAction(Villager* actor, Resource** target)
-{
-	//Generate a new move action definition
-	RecollectVillagerAction* action = new RecollectVillagerAction(actor, target);
-
-	//Add the new action at the action manager
-	all_actions.push_back(action);
-
-	return action;
-}
-
-SaveResourcesVillagerAction * j1ActionManager::SaveResourcesAction(Villager * actor, Building * target)
-{
-	//Generate a new move action definition
-	SaveResourcesVillagerAction* action = new SaveResourcesVillagerAction(actor, target);
-
-	//Add the new action at the action manager
-
-	all_actions.push_back(action);
-
-	return action;
-}
 
 SpawnUnitAction* j1ActionManager::SpawnAction(ProductiveBuilding * actor, UNIT_TYPE type, DIPLOMACY diplomacy)
 {

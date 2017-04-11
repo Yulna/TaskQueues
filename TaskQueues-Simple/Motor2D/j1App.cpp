@@ -14,7 +14,6 @@
 #include "j1Map.h"
 #include "j1Fonts.h"
 #include "j1Gui.h"
-#include "j1Console.h"
 #include "j1Animator.h"
 #include "j1EntitiesManager.h"
 #include "j1App.h"
@@ -23,8 +22,6 @@
 #include "j1SoundManager.h"
 #include "j1GroupMovement.h"
 #include "j1ActionManager.h"
-#include "j1BuffManager.h"
-#include "j1AI.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -42,14 +39,11 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	map = new j1Map();
 	font = new j1Fonts();
 	gui = new j1Gui();
-	console = new j1Console();
 	animator = new j1Animator();
 	sound = new j1SoundManager();
 	group_move = new j1GroupMovement();
 	entities_manager = new j1EntitiesManager();
-	buff_manager = new j1BuffManager();
 	player = new j1Player();
-	AI = new j1AI();
 	pathfinding = new j1Pathfinding();
 	action_manager = new j1ActionManager();
 
@@ -69,21 +63,15 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(group_move);
 	AddModule(action_manager);
 	AddModule(entities_manager);
-	AddModule(buff_manager);
 	AddModule(player);
-	AddModule(AI);
-	
+
 
 	// scene last
 	AddModule(scene);
 
-
-	AddModule(console);
-
 	// render last to swap buffer
 	AddModule(render);
-
-	
+		
 
 	PERF_PEEK(ptimer);
 
@@ -147,37 +135,6 @@ bool j1App::Awake()
 		}
 	}
 
-	//Load Cvars 
-	pugi::xml_node module_node = app_config;
-	while (module_node != NULL)
-	{
-
-		pugi::xml_node cvar = module_node.child("c_vars").first_child();
-		while (cvar != NULL)
-		{
-			//Load CVar data
-			std::string name = cvar.attribute("name").value();
-			std::string description = cvar.attribute("description").value();
-			std::string value = cvar.attribute("value").value();
-			std::string type = cvar.attribute("type").value();
-			C_VAR_TYPE cv_type = App->console->StringtoCvarType(&type);
-			std::string module = module_node.name();
-			j1Module* cv_module = App->GetModule(&module);
-
-			bool only_read = cvar.attribute("only_read").as_bool();
-			
-			//Build CVar
-			Cvar* cv = App->console->LoadCvar(name.c_str(), description.c_str(), value.c_str(), cv_type, cv_module, only_read);
-
-			LOG("-- %s -- CVar added at %s", cv->GetCvarName()->c_str(), module.c_str());
-			
-			//Next cvar
-			cvar = cvar.next_sibling();
-		}
-
-		//Next module
-		module_node = module_node.next_sibling();
-	}
 
 	PERF_PEEK(ptimer);
 
@@ -200,18 +157,6 @@ bool j1App::Start()
 
 	PERF_PEEK(ptimer);
 
-	//Add Console Commands
-	console->AddCommand("quit", nullptr);
-	console->AddCommand("save", nullptr);
-	console->AddCommand("load", nullptr);
-
-	//Add Console Cvars
-	save_dir = App->console->AddCvar("save_dir", "Directory where game data is saved", "game_save.xml", C_VAR_TYPE::CHAR_VAR, nullptr, false);
-	load_dir = App->console->AddCvar("load_dir", "Directory from app load data", "game_save.xml", C_VAR_TYPE::CHAR_VAR, nullptr, false);
-
-
-	//Desactivate Console 
-	console->active = false;
 
 	return ret;
 }
@@ -632,78 +577,7 @@ pugi::xml_node j1App::GetConfigXML() const
 	return config_node;
 }
 
-void j1App::Console_Command_Input(Command * command, Cvar * cvar, std::string * input)
-{
-	if (*command->GetCommandStr() == "quit")
-	{
-		SetQuit();
-	}
-	else if (*command->GetCommandStr() == "save")
-	{
-		SaveGame(save_dir->GetValueString()->c_str());
-		
-	}
-	else if (*command->GetCommandStr() == "load")
-	{
-		LoadGame(load_dir->GetValueString()->c_str());
-	}
-}
 
-void j1App::Console_Cvar_Input(Cvar * cvar, Command* command_type, std::string * input)
-{
-	//Set command
-	if (*command_type->GetCommandStr() == "set")
-	{
-		//Maxfps cvar
-		if (*cvar->GetCvarName() == "maxfps")
-		{
-			if (cvar->GetValueAsNum() < 1)cvar->SetValue("-1");
-			else if (cvar->GetValueAsNum() > 120)cvar->SetValue("120");
-
-			//Set cvar value
-			cvar->SetValue(input->c_str());
-
-			//Set new ms delay
-			capped_ms = (int)(1000 / cvar->GetValueAsNum());
-
-		}
-		//Save_dir cvar
-		else if (*cvar->GetCvarName() == "save_dir")
-		{
-			if (strlen(input->c_str()) > 5 && IsXMLdir(input->c_str()))
-			{
-				//Set new save directory
-				App->save_game = input->c_str();
-				
-				//Set cvar value
-				cvar->SetValue(input->c_str());
-			}
-			else App->console->GenerateConsoleLabel("Invalid Save Directory: %s", input->c_str(),cvar->GetCvarName()->c_str());
-
-		}
-
-		else if (*cvar->GetCvarName() == "load_dir")
-		{
-			if (strlen(input->c_str()) > 5 && IsXMLdir(input->c_str()))
-			{
-				//Set new save directory
-				App->load_game = input->c_str();
-
-				//Set cvar value
-				cvar->SetValue(input->c_str());
-			}
-			else App->console->GenerateConsoleLabel("Invalid Load Directory: %s", input->c_str(), cvar->GetCvarName()->c_str());
-
-		}
-		//Unknown cvar
-		else
-		{
-			App->console->GenerateConsoleLabel("Cvar id Error at module Render");
-			return;
-		}
-
-	}
-}
 
 void j1App::SetQuit()
 {

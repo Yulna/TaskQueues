@@ -58,9 +58,6 @@
     <ClCompile Include="UI_Image.cpp">
       <Filter>UserInteraface\UI_Elements</Filter>
     </ClCompile>
-    <ClCompile Include="j1Console.cpp">
-      <Filter>UserInteraface\Console</Filter>
-    </ClCompile>
     <ClCompile Include="p2Log.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
@@ -90,22 +87,7 @@
     <ClCompile Include="j1Pathfinding.cpp">
       <Filter>Pathfinding</Filter>
     </ClCompile>
-    <ClCompile Include="Hud_ActionPanel.cpp">
-      <Filter>UserInteraface\Hud</Filter>
-    </ClCompile>
-    <ClCompile Include="Hud_GamePanel.cpp">
-      <Filter>UserInteraface\Hud</Filter>
-    </ClCompile>
-    <ClCompile Include="Hud_SelectionPanel.cpp">
-      <Filter>UserInteraface\Hud</Filter>
-    </ClCompile>
     <ClCompile Include="Resources.cpp">
-      <Filter>Modules\EnititiesManager\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Units.cpp">
-      <Filter>Modules\EnititiesManager\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Champions.cpp">
       <Filter>Modules\EnititiesManager\Entities</Filter>
     </ClCompile>
     <ClCompile Include="j1SoundManager.cpp">
@@ -119,12 +101,6 @@
     </ClCompile>
     <ClCompile Include="Buildings.cpp">
       <Filter>Modules\EnititiesManager\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="j1BuffManager.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1AI.cpp">
-      <Filter>Modules\AI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -188,15 +164,6 @@
     <ClInclude Include="UI_Image.h">
       <Filter>UserInteraface\UI_Elements</Filter>
     </ClInclude>
-    <ClInclude Include="j1Console.h">
-      <Filter>UserInteraface\Console</Filter>
-    </ClInclude>
-    <ClInclude Include="C_var.h">
-      <Filter>UserInteraface\Console</Filter>
-    </ClInclude>
-    <ClInclude Include="Command.h">
-      <Filter>UserInteraface\Console</Filter>
-    </ClInclude>
     <ClInclude Include="p2Point.h">
       <Filter>Tools</Filter>
     </ClInclude>
@@ -238,21 +205,6 @@
     <ClInclude Include="Quadtree.h">
       <Filter>Tools</Filter>
     </ClInclude>
-    <ClInclude Include="Hud_ActionPanel.h">
-      <Filter>UserInteraface\Hud</Filter>
-    </ClInclude>
-    <ClInclude Include="Hud_GamePanel.h">
-      <Filter>UserInteraface\Hud</Filter>
-    </ClInclude>
-    <ClInclude Include="Hud_SelectionPanel.h">
-      <Filter>UserInteraface\Hud</Filter>
-    </ClInclude>
-    <ClInclude Include="Units.h">
-      <Filter>Modules\EnititiesManager\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Champions.h">
-      <Filter>Modules\EnititiesManager\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="Actions_Unit.h">
       <Filter>Modules\TasksMagament</Filter>
     </ClInclude>
@@ -270,12 +222,6 @@
     </ClInclude>
     <ClInclude Include="Buildings.h">
       <Filter>Modules\EnititiesManager\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="j1BuffManager.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1AI.h">
-      <Filter>Modules\AI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -297,9 +243,6 @@
     <Filter Include="UserInteraface\UI_Elements">
       <UniqueIdentifier>{284cbc2b-c97f-4e37-9735-d7d07abfd941}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UserInteraface\Console">
-      <UniqueIdentifier>{c2b1b5cb-f746-4f36-ba24-80ebceee0eb7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Modules\EnititiesManager">
       <UniqueIdentifier>{bfaf59a6-f2ed-48ce-a361-e3cf11d3c42b}</UniqueIdentifier>
     </Filter>
@@ -308,9 +251,6 @@
     </Filter>
     <Filter Include="Pathfinding">
       <UniqueIdentifier>{ea379160-4af9-4193-a358-27e9a38147db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="UserInteraface\Hud">
-      <UniqueIdentifier>{02d694a5-7c88-4ea6-9934-f272aad23985}</UniqueIdentifier>
     </Filter>
     <Filter Include="Modules\TasksMagament">
       <UniqueIdentifier>{0b086b82-d4b0-4f1c-871b-f1fa6dc611f9}</UniqueIdentifier>

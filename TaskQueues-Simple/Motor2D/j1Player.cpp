@@ -17,11 +17,6 @@
 
 #include "Actions_Unit.h"
 
-//Hud Elements
-#include "Hud_SelectionPanel.h"
-#include "Hud_GamePanel.h"
-#include "Hud_ActionPanel.h"
-
 //j1Player Constructor ============================================================
 j1Player::j1Player()
 {
@@ -75,15 +70,7 @@ bool j1Player::PreUpdate()
 
 	}
 
-	
 
-
-
-	//Building spawn unit
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
-	
-	}
 
 	if (App->debug_mode)
 	{
@@ -111,31 +98,14 @@ bool j1Player::PreUpdate()
 			new_unit->AddPasiveAction(App->action_manager->ScanAction(new_unit));
 		}
 	
-		//Generate BerryBush resource in mouse coordinates
-		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
-		{
-			Entity* new_unit = App->entities_manager->GenerateResource(BERRY_BUSH);
-			new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
-		}
+	
 		//Generate Stone Ore resource in mouse coordinates
 		if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN )
 		{
 			Entity* new_unit = App->entities_manager->GenerateResource(STONE_ORE);
 			new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 		}
-		//Generate Gold Ore resource in mouse coordinates
-		if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
-		{
-			Entity* new_unit = App->entities_manager->GenerateResource(GOLD_ORE);
-			new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
-		}
-
-		//Generate Warrior unit in mouse coordinates
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
-		{
-			Unit* new_unit = App->entities_manager->GenerateUnit(WARRIOR_CHMP, ALLY);
-			new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
-		}
+		
 
 	}
 

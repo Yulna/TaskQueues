@@ -5,9 +5,7 @@
 #include "Quadtree.h"
 
 #include "BaseEntities.h"
-#include "Units.h"
 #include "Buildings.h"
-#include "Champions.h"
 
 class Action;
 class ActionManager;
@@ -49,9 +47,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	//Handle Console Input ----------------------
-	void Console_Command_Input(Command* command, Cvar* cvar, std::string* input);
-	void Console_Cvar_Input(Cvar* cvar, Command* command_type, std::string* input);
+
 
 private:
 
@@ -69,8 +65,6 @@ private:
 	std::vector<Resource*>	resources_defs;
 	std::vector<Building*>	buildings_defs;
 
-	// Cvar that defines the console unit generator unit type
-	Cvar* unit_cvar;
 
 	//Methods to add entities definitions
 	bool		AddUnitDefinition(const pugi::xml_node* unit_node);

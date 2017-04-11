@@ -22,7 +22,6 @@ class j1Scene;
 class j1Map;
 class j1Fonts;
 class j1Gui;
-class j1Console;
 class j1Module;
 class j1Animator;
 class j1SoundManager;
@@ -31,10 +30,8 @@ class j1EntitiesManager;
 class j1BuffManager;
 class j1ActionManager;
 class j1Player;
-class j1AI;
 class j1Pathfinding;
-class Command;
-class Cvar;
+
 
 class j1App
 {
@@ -108,7 +105,6 @@ public:
 	j1Map*				map = NULL;
 	j1Fonts*			font = NULL;
 	j1Gui*				gui = NULL;
-	j1Console*			console = NULL;
 	j1Animator*			animator = NULL;
 	j1SoundManager*		sound = NULL;
 	j1GroupMovement*	group_move = NULL;
@@ -116,7 +112,6 @@ public:
 	j1BuffManager*		buff_manager = NULL;
 	j1ActionManager*	action_manager = NULL;
 	j1Player*			player = NULL;
-	j1AI*				AI = NULL;
 	j1Pathfinding*		pathfinding = NULL;
 
 	// Add a new module to handle
@@ -132,10 +127,6 @@ public:
 
 	//Get config xml file
 	pugi::xml_node GetConfigXML()const;
-
-	//Handle Console Input ----------------------
-	void Console_Command_Input(Command* command, Cvar* cvar, std::string* input);
-	void Console_Cvar_Input(Cvar* cvar, Command* command_type, std::string* input);
 
 private:
 
@@ -165,8 +156,6 @@ private:
 
 	bool				want_to_quit = false;
 
-	Cvar*				save_dir = nullptr;
-	Cvar*				load_dir = nullptr;
 
 	mutable std::list<std::string*>	saved_games;
 
