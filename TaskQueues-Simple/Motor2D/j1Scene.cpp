@@ -210,13 +210,6 @@ bool j1Scene::LoadScene()
 			iPoint unit_pos = App->map->MapToWorldCenter(entity_node.attribute("x_pos").as_uint(), entity_node.attribute("y_pos").as_uint());
 			new_unit->SetPosition(unit_pos.x, unit_pos.y);
 		}
-		else if (type == RESOURCE)
-		{
-			RESOURCE_TYPE resource_type = App->animator->StrToResourceEnum(entity_node.attribute("resource_type").as_string());
-			Resource* new_resource = App->entities_manager->GenerateResource(resource_type);
-			iPoint resource_pos = App->map->MapToWorldCenter(entity_node.attribute("x_pos").as_uint(), entity_node.attribute("y_pos").as_uint());
-			new_resource->SetPosition(resource_pos.x, resource_pos.y);
-		}
 		else if (type == BUILDING)
 		{
 			BUILDING_TYPE building_type = App->animator->StrToBuildingEnum(entity_node.attribute("building_type").as_string());

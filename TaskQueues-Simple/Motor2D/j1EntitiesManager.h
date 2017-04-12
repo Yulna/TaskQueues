@@ -53,7 +53,6 @@ private:
 
 	//Lists of current game entities
 	std::list<Unit*>		units;
-	std::list<Resource*>	resources;
 	std::list<Building*>	buildings;
 
 
@@ -62,13 +61,11 @@ private:
 
 	//Vector of predefined units
 	std::vector<Unit*>		units_defs;
-	std::vector<Resource*>	resources_defs;
 	std::vector<Building*>	buildings_defs;
 
 
 	//Methods to add entities definitions
 	bool		AddUnitDefinition(const pugi::xml_node* unit_node);
-	bool		AddResourceDefinition(const pugi::xml_node* resource_node);
 	bool		AddBuildingDefinition(const pugi::xml_node* building_node);
 
 	//Check if the entity civilizations string contains the chosen one
@@ -78,7 +75,6 @@ public:
 
 	//Entities Quad Trees to help other modules work with enetities
 	m_QuadTree<Unit*>			units_quadtree;
-	m_QuadTree<Resource*>		resources_quadtree;
 	m_QuadTree<Building*>		buildings_quadtree;
 
 	//Functionality -------------------
@@ -87,12 +83,10 @@ public:
 	//Factory Methods -------
 	Unit*		GenerateUnit(UNIT_TYPE type, DIPLOMACY diplomacy, bool push_in_list = true);
 	Building*	GenerateBuilding(BUILDING_TYPE type, DIPLOMACY diplomacy, bool push_in_list = true);
-	Resource*	GenerateResource(RESOURCE_TYPE type);
 
 	//Get Methods -----------
 	const std::list<Unit*>*		UnitsList()const;
 	const std::list<Building*>*	BuildingList()const;
-	const std::list<Resource*>*	ResourceList()const;
 
 	//Delete Methods --------
 	bool		DeleteEntity(Entity* entity);
@@ -110,10 +104,6 @@ public:
 
 	//Organize unit vector
 	std::priority_queue<Unit*, std::vector<Unit*>, LessDistance > OrganizeByNearest(std::vector<Unit*>& vec, Circle& target);
-
-
-
-	
 	
 
 };

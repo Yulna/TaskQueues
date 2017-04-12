@@ -1008,35 +1008,3 @@ bool j1Animator::BuildingPlay(Building* target)
 	return false;
 }
 
-bool j1Animator::ResourcePlay(Resource * target)
-{
-	//Initialize random numbers generator
-	time_t t;
-	srand(time(&t));
-
-	//Iterate the resource animations vector
-	uint size = resource_blocks.size();
-	for (uint k = 0; k < size; k++)
-	{
-		//Compare resource type id
-		if (resource_blocks[k]->GetId() == target->GetResourceType())
-		{
-			//Generate a random number to select one of the possible animations
-			uint rand_index = rand() % resource_blocks[k]->GetChildsNum();
-			//Choose the child with the random index and get its animation
-			Animation* anim = new Animation(*resource_blocks[k]->GetBlock(rand_index)->GetAnimation());
-
-			if (anim != nullptr)
-			{
-				target->SetAnimation(anim);
-				return true;
-			}
-			else
-			{
-				LOG("Error getting resource animation");
-				return false;
-			}
-		}
-	}
-	return false;
-}

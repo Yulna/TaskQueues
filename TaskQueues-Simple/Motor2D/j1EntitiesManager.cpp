@@ -50,15 +50,7 @@ void j1EntitiesManager::Disable()
 	units.clear();
 	units_quadtree.Reset();
 
-	//Clean Up resources list
-	std::list<Resource*>::iterator resources_item = resources.begin();
-	while (resources_item != resources.end())
-	{
-		RELEASE(resources_item._Ptr->_Myval);
-		resources_item++;
-	}
-	resources.clear();
-	resources_quadtree.Reset();
+
 
 	//Clean Up buildings list
 	std::list<Building*>::iterator buildings_item = buildings.begin();
@@ -82,8 +74,6 @@ bool j1EntitiesManager::Start()
 	//Built entities quad trees
 	units_quadtree.SetMaxObjects(8);
 	units_quadtree.SetDebugColor({ 255,0,255,255 });
-	resources_quadtree.SetMaxObjects(8);
-	resources_quadtree.SetDebugColor({ 0,255,255,255 });
 	buildings_quadtree.SetMaxObjects(3);
 	buildings_quadtree.SetDebugColor({ 255,255,0,255 });
 
@@ -131,12 +121,7 @@ bool j1EntitiesManager::PostUpdate()
 		ENTITY_TYPE type = wasted_units[k]->GetEntityType();
 
 		//Remove the entity from the correct list
-		if (type == RESOURCE)
-		{
-			resources.remove((Resource*)wasted_units[k]);
-			resources_quadtree.Exteract((Resource*)wasted_units[k], &wasted_units[k]->GetPosition());
-		}
-		else if (type == BUILDING)
+		if (type == BUILDING)
 		{
 			buildings.remove((Building*)wasted_units[k]);
 			buildings_quadtree.Exteract((Building*)wasted_units[k], &wasted_units[k]->GetPosition());
@@ -170,14 +155,6 @@ bool j1EntitiesManager::Draw() const
 		units_vec[k]->Draw(App->debug_mode);
 	}
 
-	//Draw all Resources
-	std::vector<Resource*> resources_vec;
-	resources_quadtree.CollectCandidates(resources_vec, viewport);
-	size = resources_vec.size();
-	for (uint k = 0; k < size; k++)
-	{
-		resources_vec[k]->Draw(App->debug_mode);
-	}
 
 	//Draw all buildings
 	std::vector<Building*> buildings_vec;
@@ -210,17 +187,6 @@ bool j1EntitiesManager::CleanUp()
 	units_quadtree.Reset();
 	units_quadtree.Clear();
 
-	//Clean Up resources list
-	std::list<Resource*>::iterator resources_item = resources.begin();
-	while (resources_item != resources.end())
-	{
-		RELEASE(resources_item._Ptr->_Myval);
-		resources_item++;
-	}
-	resources.clear();
-	resources_quadtree.Reset();
-	resources_quadtree.Clear();
-
 	//Clean Up buildings list
 	std::list<Building*>::iterator buildings_item = buildings.begin();
 	while (buildings_item != buildings.end())
@@ -240,13 +206,6 @@ bool j1EntitiesManager::CleanUp()
 	}
 	units_defs.clear();
 
-	//Clean Up resoureces_defs vector
-	size = resources_defs.size();
-	for (uint k = 0; k < size; k++)
-	{
-		RELEASE(resources_defs[k]);
-	}
-	resources_defs.clear();
 
 	//Clean Up buildings_defs vector
 	size = buildings_defs.size();
@@ -364,50 +323,6 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	return true;
 }
 
-bool j1EntitiesManager::AddResourceDefinition(const pugi::xml_node * resource_node)
-{
-	if (resource_node == nullptr)return false;
-
-	//Generate a new resource definition from the node
-	Resource* new_def = new Resource();
-	
-	//Resource ID -----------
-	/*Name*/			new_def->SetName(resource_node->attribute("name").as_string());
-	/*Entity Type*/		new_def->SetEntityType(RESOURCE);
-	/*Resource Type*/	new_def->SetResourceType(App->animator->StrToResourceEnum(resource_node->attribute("resource_type").as_string()));
-	
-	//Resource Primitives ---
-	/*Mark*/			Rectng mark;
-	/*Mark Width*/		mark.SetWidth(resource_node->attribute("mark_w").as_uint());
-	/*Mark Height*/		mark.SetHeight(resource_node->attribute("mark_h").as_uint());
-	/*Mark Color*/		mark.SetColor({ 255,255,255,255 });
-						new_def->SetMark(mark);
-	/*Interaction Area*/Circle area({ 0,0 }, resource_node->attribute("interaction_rad").as_uint(), { 0,0 });
-						area.SetColor({ 0, 0, 255, 255 });
-						new_def->SetInteractArea(area);
-	/*Selection Rect*/	SDL_Rect selection_rect;
-	/*S.Rect X*/		selection_rect.x = resource_node->attribute("selection_x").as_int();
-	/*S.Rect Y*/		selection_rect.y = resource_node->attribute("selection_y").as_int();
-	/*S.Rect W*/		selection_rect.w = resource_node->attribute("selection_w").as_int();
-	/*S.Rect H*/		selection_rect.h = resource_node->attribute("selection_h").as_int();
-						new_def->SetSelectionRect(selection_rect);
-	/*Icon Rect*/		SDL_Rect icon_rect;
-	/*I.Rect X*/		icon_rect.x = resource_node->attribute("icon_x").as_int();
-	/*I.Rect Y*/		icon_rect.y = resource_node->attribute("icon_y").as_int();
-	/*I.Rect W*/		icon_rect.w = resource_node->attribute("icon_w").as_int();
-	/*I.Rect H*/		icon_rect.h = resource_node->attribute("icon_h").as_int();
-						new_def->SetIcon(icon_rect);
-
-	//Resource Metrics ------
-	/*Max Resources*/	new_def->SetMaxLife(resource_node->attribute("max_resources").as_uint());
-	/*C.Resources*/		new_def->SetLife(new_def->GetMaxLife());
-
-	resources_defs.push_back(new_def);
-
-	LOG("%s definition built!", new_def->GetName());
-
-	return true;
-}
 
 bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_node)
 {
@@ -565,7 +480,6 @@ bool j1EntitiesManager::LoadCivilization(const char * folder)
 		switch (App->animator->StrToEntityEnum(entity_node.attribute("id").as_string()))
 		{
 		case UNIT:		AddUnitDefinition(&entity_node.first_child());		break;
-		case RESOURCE:	AddResourceDefinition(&entity_node.first_child());	break;
 		case BUILDING:	AddBuildingDefinition(&entity_node.first_child());	break;
 
 		default:
@@ -689,31 +603,6 @@ Building* j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type, DIPLOMACY dipl
 	return nullptr;
 }
 
-Resource* j1EntitiesManager::GenerateResource(RESOURCE_TYPE type)
-{
-	Resource* new_resource = nullptr;
-
-	uint def_num = resources_defs.size();
-	for (uint k = 0; k < def_num; k++)
-	{
-		if (resources_defs[k]->GetResourceType() == type)
-		{
-			//Build unit
-			new_resource = new Resource(*resources_defs[k]);
-
-			new_resource->myself = new_resource;
-
-			//Set unit animation
-			App->animator->ResourcePlay(new_resource);
-
-			//Add the new unit at the units manage list
-			resources.push_back(new_resource);
-
-			return new_resource;
-		}
-	}
-	return nullptr;
-}
 
 const std::list<Unit*>* j1EntitiesManager::UnitsList() const
 {
@@ -725,10 +614,6 @@ const std::list<Building*>* j1EntitiesManager::BuildingList() const
 	return &buildings;
 }
 
-const std::list<Resource*>* j1EntitiesManager::ResourceList() const
-{
-	return &resources;
-}
 
 bool j1EntitiesManager::DeleteEntity(Entity * entity)
 {

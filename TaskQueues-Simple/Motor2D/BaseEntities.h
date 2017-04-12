@@ -413,47 +413,6 @@ public:
 };
 /// ---------------------------------------------
 
-///Class Resource -------------------------------
-//Base class that defines standard attributes of resources
-class Resource : public Entity
-{
-public:
-
-	Resource();
-	Resource(const Resource& copy);
-	~Resource();
-
-protected:
-
-	Rectng			mark;
-	Circle			interact_area;
-	RESOURCE_TYPE	resource_type = NO_RESOURCE;
-
-	void CleanMapLogic();
-
-public:
-
-	//Functionality -------------------
-	//Draw ------------------
-	bool	Draw(bool debug);
-
-	//State -----------------
-	virtual bool ExtractResources(uint* value);
-
-	//Set Methods -----------
-	void	SetPosition(float x, float y, bool insert = true);
-	void	SetMark(const Rectng& rectangle);
-	void	SetInteractArea(const Circle& area);
-	void	SetResourceType(RESOURCE_TYPE type);
-
-	//Get Methods -----------
-	const Rectng&	GetMark()const;
-	const Circle*	GetInteractArea()const;
-	RESOURCE_TYPE	GetResourceType()const;
-
-};
-/// ---------------------------------------------
-
 ///Class Building -------------------------------
 //Base class that defines standard attributes of buildings
 class Building : public Entity
@@ -482,9 +441,6 @@ public:
 	//Check is can be built in the position
 	bool	CheckZone(int x, int y);
 	//Cover / Release units
-	bool	CoverUnit(const Unit* target);
-	void	ReleaseUnit(const Unit* target);
-	void	ReleaseAllUnits();
 	bool	Die();
 
 	//Draw ------------------

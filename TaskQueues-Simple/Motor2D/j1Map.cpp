@@ -558,7 +558,6 @@ bool j1Map::LoadMap()
 		// Determine other modules quad trees map area 
 		App->entities_manager->units_quadtree.SetBoundaries(map_area);
 		App->entities_manager->buildings_quadtree.SetBoundaries(map_area);
-		App->entities_manager->resources_quadtree.SetBoundaries(map_area);
 
 		// Set map draw quad tree area
 		map_quadtree.SetBoundaries(map_area);

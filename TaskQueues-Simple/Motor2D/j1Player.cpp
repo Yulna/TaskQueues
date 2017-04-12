@@ -97,20 +97,9 @@ bool j1Player::PreUpdate()
 			new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 			new_unit->AddPasiveAction(App->action_manager->ScanAction(new_unit));
 		}
-	
-	
-		//Generate Stone Ore resource in mouse coordinates
-		if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN )
-		{
-			Entity* new_unit = App->entities_manager->GenerateResource(STONE_ORE);
-			new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
-		}
-		
 
 	}
-
-
-
+	
 	return true;
 }
 
