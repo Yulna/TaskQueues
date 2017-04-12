@@ -5,7 +5,6 @@
 #include "j1EntitiesManager.h"
 #include "BaseEntities.h"
 #include "j1App.h"
-#include "j1SoundManager.h"
 #include "Actions_Unit.h"
 
 class SpawnUnitAction : public Action
@@ -41,7 +40,6 @@ public:
 			App->entities_manager->AddUnit(new_unit);
 			new_unit->SetPosition(x, y);
 			App->animator->UnitPlay(new_unit);
-			App->sound->PlayFXAudio(SOUND_TYPE::VILLAGER_CREATED_SOUND);
 
 			new_unit->AddAction(App->action_manager->MoveAction(new_unit, iPoint(spawn_point.x + actor->GetPosition().x + 1, spawn_point.y + actor->GetPosition().y + 1)));
 

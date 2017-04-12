@@ -108,25 +108,38 @@ void j1Map::Draw(bool debug)
 			continue;
 		}
 
-		this->map_quadtree;
-		uint size = points_in_view.size();
-		for (uint k = 0; k < size; k++)
+		for (int y = 0; y < data.height; ++y)
 		{
-			//Get tile id
-			int tile_id = layer->Get(points_in_view[k].x, points_in_view[k].y);
-			if (tile_id == 0)continue;
+			for (int x = 0; x < data.width; ++x)
+			{
+				//Get tile id
+				int tile_id = layer->Get(x, y);
 
-			//Get tileset from tile id
-			TileSet* tileset = GetTilesetFromTileId(tile_id);
+				//Transform tile map coordinates to world coordinates
+				iPoint pos = MapToWorld(x, y);
 
-			//Get tile texture rect & blit position
-			SDL_Rect r = tileset->GetTileRect(tile_id);
-			iPoint map_point = MapToWorld(points_in_view[k].x, points_in_view[k].y);
+				//Check if the tile is inside the renderer view port
+				if (!(pos.x + data.tile_width * 0.9 >= -App->render->camera.x && pos.x <= -App->render->camera.x + App->render->camera.w) ||
+					!(pos.y + data.tile_height * 0.9 >= -App->render->camera.y && pos.y <= -App->render->camera.y + App->render->camera.h))
+				{
+					continue;
+				}
 
-			//Blit the current tile
-			App->render->TileBlit(tileset->texture, map_point.x, map_point.y, &r);
+				//Check if the tile is defined
+				if (tile_id > 0)
+				{
+					//Get tileset from tile id
+					TileSet* tileset = GetTilesetFromTileId(tile_id);
 
+					//Get tile texture rect
+					SDL_Rect r = tileset->GetTileRect(tile_id);
+
+					//Blit the current tile
+					App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+				}
+			}
 		}
+
 	}
 
 	//Draw map tiles net
@@ -311,7 +324,6 @@ void j1Map::CalculateTilesInView()
 {
 	points_in_view.clear();
 	SDL_Rect viewport = { -App->render->camera.x - data.tile_width, -App->render->camera.y - data.tile_height, App->render->camera.w + data.tile_width * 2, App->render->camera.h + data.tile_height * 2 };
-	map_quadtree.CollectCandidates(points_in_view, viewport);
 }
 
 void j1Map::ChangeLogicMap(const iPoint & position, uint element_width, uint element_height, uint value_map)
@@ -554,14 +566,7 @@ bool j1Map::LoadMap()
 		map_area.y = 0 - App->render->camera.y;
 		map_area.w = data.width * data.tile_width;
 		map_area.h = data.height * data.tile_height + (data.height);
-		
-		// Determine other modules quad trees map area 
-		App->entities_manager->units_quadtree.SetBoundaries(map_area);
-		App->entities_manager->buildings_quadtree.SetBoundaries(map_area);
 
-		// Set map draw quad tree area
-		map_quadtree.SetBoundaries(map_area);
-		map_quadtree.SetMaxObjects(10);
 
 		//Fill the draw quad tree with all the tiles coordinates
 		for (uint y = 0; y < data.height; y++)
@@ -569,7 +574,6 @@ bool j1Map::LoadMap()
 			for (uint x = 0; x < data.width; x++)
 			{
 				iPoint loc = MapToWorldCenter(x, y);
-				if (!map_quadtree.Insert(iPoint(x, y) , &loc)) fails++;
 			}
 		}
 

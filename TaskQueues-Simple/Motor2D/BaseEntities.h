@@ -54,18 +54,6 @@ enum UNIT_CLASS
 	CAVALRY,
 	SIEGE
 };
-enum RESOURCE_TYPE
-{
-	NO_RESOURCE = 0,
-	TREE,
-	TREE_CUT,
-	CHOP,
-	BERRY_BUSH,
-	GOLD_ORE,
-	TINY_GOLD_ORE,
-	STONE_ORE,
-	TINY_STONE_ORE
-};
 enum BUILDING_TYPE
 {
 	NO_BUILDING = 0,
@@ -83,12 +71,6 @@ enum ACTION_TYPE
 	DISAPPEAR,
 	IDLE,
 	WALK
-};
-enum ATTACK_TYPE
-{
-	NO_ATTACK = 0,
-	MELEE,
-	DISTANCE,
 };
 enum DIRECTION_TYPE
 {
@@ -108,57 +90,7 @@ enum DIPLOMACY
 	ALLY,
 	ENEMY
 };
-enum ITEM_TYPE
-{
-	NO_ITEM,
-	AXE,
-	BASKET,
-	BOW,
-	FISH,
-	GOLD,
-	STONE,
-	WOOD,
-	MEAT,
-	HAMMER,
-	PICK,
-	PLOW
-};
-enum SOUND_TYPE
-{
-	NO_SOUND,
-	MAIN_MENU_SONG,
-	INGAME_SONG,
-	WIN_SONG,
-	LOST_SONG,
-	SWORD_ATTACK_SOUND,
-	BARRACK_SOUND,
-	TOWN_CENTER_SELECTED_SOUND,
-	VILLAGER_CREATED_SOUND,
-	DEATH_SOUND,
-	ATTACK_SOUND,
-	CLICK_SOUND,
-	MOVE_SOUND,
-	CLICK_MAIN_MENU,
-	CLICK_SUBMENU,
-	CLICK_INGAME,
-	WIN_FX,
-	LOST_FX,
-	ERROR_SOUND,
-	PLAYER_UNIT_ALERT,
-	PLAYER_BUILDING_ALERT,
-	WARRIOR_SKILL_LVL1_A,
-	WARRIOR_SKILL_LVL1_B,
-	WARRIOR_SKILL_LVL2_A,
-	WARRIOR_SKILL_LVL2_B
-};
 
-enum COLLISION_TYPE
-{
-	NO_COLLISION,
-	COLLISION_IDLE,
-	FUTURE_COLLISION_MOVE,
-	COLLISION_MOVE
-};
 // --------------------------
 
 ///Class Entity ---------------------------------
@@ -281,27 +213,7 @@ protected:
 	ACTION_TYPE		action_type = IDLE;
 	DIRECTION_TYPE	direction_type = SOUTH;
 	iPoint			future_position = { 0,0 };
-	//Attack -----------
-	j1Timer			action_timer;
-	uint			attack_delay = 0;
-	uint			attack_hitpoints = 0;
-	uint			attack_bonus = 0;
-	float			attack_buff = 0;
-	uint			siege_hitpoints = 0;
-	uint			attack_rate = 0;
-	ATTACK_TYPE		attack_type = NO_ATTACK;
-	//Defense/Armor ----
-	uint			defense = 0; /*Used in melee damage*/
-	uint			defense_bonus = 0;
-	float			defense_buff = 0;
-	uint			armor = 0; /*Used in distance damage*/
-	uint			armor_bonus = 0;
-	float			armor_buff = 0;
 	//Resources --------
-	uint			food_cost = 0;
-	uint			wood_cost = 0;
-	uint			gold_cost = 0;
-	uint			population_cost = 0;
 	uint			train_time = 0;
 	uint			exp = 0;
 	
@@ -334,13 +246,7 @@ public:
 	Unit**					FindNewTarget();
 	void					Focus(const iPoint& target, bool play = true);
 	DIRECTION_TYPE			LookDirection(const iPoint& from, const iPoint& to);
-	bool					AttackUnit(Unit** target);
-	bool					AttackBuilding(Building** target);
-	bool					Cover();
-	void					DirectDamage(uint damage);
-	bool					Die();
-	void					Stun(uint time);
-	COLLISION_TYPE			CheckColision(const Unit* current, const Unit* other);
+
 
 	//Set Methods -----------
 	void	SetPosition(float x, float y, bool insert = true);
@@ -355,24 +261,6 @@ public:
 	void	SetSpeed(float speed_val);
 	void	SetAction(ACTION_TYPE action_val);
 	void	SetDirection(DIRECTION_TYPE direction_val);
-	void	SetAttackDelay(uint atk_delay);
-	void	SetAttackHitPoints(uint atk_val);
-	void	SetAttackBonus(uint atk_bonus);
-	void	SetAttackBuff(float atk_buff);
-	void	SetSiegeHitPoints(uint siege_val);
-	void	SetAttackRate(uint atk_rate);
-	void	SetAttackType(ATTACK_TYPE atk_type);
-	void	SetAttackArea(const Circle& atk_area);
-	void	SetDefense(uint def);
-	void	SetDefenseBonus(uint def_bonus);
-	void	SetDefenseBuff(float def_buff);
-	void	SetArmor(uint arm);
-	void	SetArmorBonus(uint arm_bonus);
-	void	SetArmorBuff(float arm_buff);
-	void	SetFoodCost(uint food_cst);
-	void	SetWoodCost(uint wood_cst);
-	void	SetGoldCost(uint coin_cst);
-	void	SetPopulationCost(uint poblation_cst);
 	void	SetTrainTime(uint train_time_val);
 	void	SetExp(uint experience);
 
@@ -387,25 +275,8 @@ public:
 	float			GetSpeed()const;
 	ACTION_TYPE		GetAction()const;
 	DIRECTION_TYPE	GetDirection()const;
-	uint			GetAttackDelay()const;
-	uint			GetAttackHitPoints()const;
-	uint			GetAttackBonus()const;
-	float			GetAttackBuff()const;
-	uint			GetSiegeHitPoints()const;
-	uint			GetAttackRate()const;
-	ATTACK_TYPE		GetAttackType()const;
 	uint			GetAttackRange()const;
 	const Circle*	GetAttackArea()const;
-	uint			GetDefense()const;
-	uint			GetDefenseBonus()const;
-	float			GetDefenseBuff()const;
-	uint			GetArmor()const;
-	uint			GetArmorBonus()const;
-	float			GetArmorBuff()const;
-	uint			GetFoodCost()const;
-	uint			GetWoodCost()const;
-	uint			GetGoldCost()const;
-	uint			GetPopulationCost()const;
 	uint			GetTrainTime()const;
 	uint			GetExp()const;
 	std::vector<iPoint>* GetPath() const;
@@ -440,8 +311,6 @@ public:
 	//Functionality -------------------
 	//Check is can be built in the position
 	bool	CheckZone(int x, int y);
-	//Cover / Release units
-	bool	Die();
 
 	//Draw ------------------
 	bool	Draw(bool debug);

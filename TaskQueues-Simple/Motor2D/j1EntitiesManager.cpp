@@ -10,7 +10,6 @@
 #include "j1Pathfinding.h"
 #include "j1Map.h"
 #include "p2Log.h"
-#include "j1SoundManager.h"
 
 //Testing purposes only should be erased
 #include "j1Scene.h"
@@ -47,10 +46,6 @@ void j1EntitiesManager::Disable()
 		RELEASE(units_item._Ptr->_Myval);
 		units_item++;
 	}
-	units.clear();
-	units_quadtree.Reset();
-
-
 
 	//Clean Up buildings list
 	std::list<Building*>::iterator buildings_item = buildings.begin();
@@ -60,23 +55,13 @@ void j1EntitiesManager::Disable()
 		RELEASE(buildings_item._Ptr->_Myval);
 		buildings_item++;
 	}
-	buildings.clear();
-	buildings_quadtree.Reset();
-
+	
 }
 
 bool j1EntitiesManager::Start()
 {
 	//Load Civilization Test
 	bool ret = LoadCivilization("Teutons.xml");
-
-
-	//Built entities quad trees
-	units_quadtree.SetMaxObjects(8);
-	units_quadtree.SetDebugColor({ 255,0,255,255 });
-	buildings_quadtree.SetMaxObjects(3);
-	buildings_quadtree.SetDebugColor({ 255,255,0,255 });
-
 
 	return ret;
 }
@@ -124,12 +109,10 @@ bool j1EntitiesManager::PostUpdate()
 		if (type == BUILDING)
 		{
 			buildings.remove((Building*)wasted_units[k]);
-			buildings_quadtree.Exteract((Building*)wasted_units[k], &wasted_units[k]->GetPosition());
 		}
 		else if (type == UNIT)
 		{
 			units.remove((Unit*)wasted_units[k]);
-			units_quadtree.Exteract((Unit*)wasted_units[k], &wasted_units[k]->GetPosition());
 		}
 
 		RELEASE(wasted_units[k]);
@@ -147,29 +130,22 @@ bool j1EntitiesManager::Draw() const
 	SDL_Rect viewport = { - (App->render->camera.x + 50) - App->map->data.tile_width, -App->render->camera.y, App->render->camera.w + 100 + App->map->data.tile_width * 2, App->render->camera.h - App->map->data.tile_height * 1 };
 
 	//Draw all units
-	std::vector<Unit*> units_vec;
-	units_quadtree.CollectCandidates(units_vec, viewport);
-	uint size = units_vec.size();
-	for (uint k = 0; k < size; k++)
+
+	std::list<Unit*>::const_iterator units_it = units.begin();
+
+	while (units_it != units.end())
 	{
-		units_vec[k]->Draw(App->debug_mode);
+		units_it._Ptr->_Myval->Draw(App->debug_mode);
+		units_it++;
 	}
 
 
 	//Draw all buildings
-	std::vector<Building*> buildings_vec;
-	buildings_quadtree.CollectCandidates(buildings_vec, viewport);
-	size = buildings_vec.size();
+	/*size = buildings.size();
 	for (uint k = 0; k < size; k++)
 	{
 		buildings_vec[k]->Draw(App->debug_mode);
-	}
-
-	//Draw Units quadtree in debug mode
-	if (App->map_debug_mode)
-	{
-		units_quadtree.Draw();
-	}
+	}*/
 
 	return ret;
 }
@@ -184,8 +160,7 @@ bool j1EntitiesManager::CleanUp()
 		units_item++;
 	}
 	units.clear();
-	units_quadtree.Reset();
-	units_quadtree.Clear();
+
 
 	//Clean Up buildings list
 	std::list<Building*>::iterator buildings_item = buildings.begin();
@@ -195,8 +170,7 @@ bool j1EntitiesManager::CleanUp()
 		buildings_item++;
 	}
 	buildings.clear();
-	buildings_quadtree.Reset();
-	buildings_quadtree.Clear();
+
 
 	//Clean Up units_defs vector
 	uint size = units_defs.size();
@@ -247,7 +221,6 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	/*Name*/			new_def->SetName(unit_node->attribute("name").as_string());
 	/*Entity Type*/		new_def->SetEntityType(UNIT);
 	/*Unit Type*/		new_def->SetUnitType(unit_type);
-	/*Attack Type*/		new_def->SetAttackType(App->animator->StrToAttackEnum(unit_node->attribute("attack_type").as_string()));
 	//Unit Primitives -------
 	/*Mark*/			Circle vision;
 	/*Mark Radius*/		vision.SetRad(unit_node->attribute("vision_rad").as_uint());
@@ -283,22 +256,6 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	/*Life*/			new_def->SetLife(new_def->GetMaxLife());
 	/*View Area*/		new_def->SetViewArea(unit_node->attribute("view_area").as_uint());
 	/*Speed*/			new_def->SetSpeed(unit_node->attribute("speed").as_float());
-	/*Attack Delay*/	new_def->SetAttackDelay(unit_node->attribute("attack_delay").as_uint());
-	/*Attack Points*/	new_def->SetAttackHitPoints(unit_node->attribute("attack_hitpoints").as_uint());
-	/*Attack Bonus*/	new_def->SetAttackBonus(unit_node->attribute("attack_bonus").as_uint());
-	/*Siege Points*/	new_def->SetSiegeHitPoints(unit_node->attribute("siege_hitpoints").as_uint());
-	/*Attack Rate*/		new_def->SetAttackRate(unit_node->attribute("attack_rate").as_uint());
-	/*Attack Area*/		Circle area({ 0,0 }, unit_node->attribute("attack_range").as_uint(), { 0,0 });
-						area.SetColor({ 0, 0, 255, 255 });
-						new_def->SetAttackArea(area);
-	/*Defense*/			new_def->SetDefense(unit_node->attribute("defense").as_uint());
-	/*Defense Bonus*/	new_def->SetDefenseBonus(unit_node->attribute("defense_bonus").as_uint());
-	/*Armor*/			new_def->SetArmor(unit_node->attribute("armor").as_uint());
-	/*Armor Bonus*/		new_def->SetArmorBonus(unit_node->attribute("armor_bonus").as_uint());
-	/*Food Cost*/		new_def->SetFoodCost(unit_node->attribute("food_cost").as_uint());
-	/*Wood Cost*/		new_def->SetWoodCost(unit_node->attribute("wood_cost").as_uint());
-	/*Gold Cost*/		new_def->SetGoldCost(unit_node->attribute("gold_cost").as_uint());
-	/*Population Cost*/	new_def->SetPopulationCost(unit_node->attribute("population_cost").as_uint());
 	/*Train Time*/		new_def->SetTrainTime(unit_node->attribute("train_time").as_uint());
 
 
@@ -497,7 +454,6 @@ bool j1EntitiesManager::LoadCivilization(const char * folder)
 	load_folder.clear();
 
 	load_folder = name + "/" + "SoundsData.xml";
-	App->sound->LoadSoundBlock(load_folder.c_str());
 
 	// ------------------------------------------
 
@@ -518,24 +474,6 @@ Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type, DIPLOMACY diplomacy, bool 
 	{
 		if (units_defs[k]->GetUnitType() == type)
 		{
-			//If the unit to generate is a special unit we need to allocate extra stats
-			if (type == VILLAGER)
-			{
-
-			}
-			else if (type == WARRIOR_CHMP)
-			{
-			
-			}
-			else if (type == ARCHER_CHMP)
-			{
-
-			}
-			else if (type == WIZARD_CHMP)
-			{
-
-			}
-			else
 			{
 				//Build unit
 				new_unit = new Unit(*units_defs[k]);
@@ -655,32 +593,10 @@ bool j1EntitiesManager::SetUnitPath(Unit* target, const iPoint& goal)
 	return true;
 }
 
-bool j1EntitiesManager::SetGroupPath(const std::vector<Unit*>& targets, const iPoint& goal)
-{
-	/*
-	if(targets.size() > 0)return false;
-
-	uint size = targets.size();
-	for (uint k = 0; k < size; k++)
-	{
-		//Get target position
-		fPoint target_pos = targets[k]->GetPosition();
-		//Calculate path from target position to goal
-		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(iPoint(target_pos.x, target_pos.y), goal);
-		//Return false if the path is incorrect
-		if (path == nullptr)return false;
-		//Set current target path
-		targets[k]->SetPath(path);
-	}
-	*/
-	return true;
-}
 
 void j1EntitiesManager::AddUnit(Unit* unit)
 {
 	units.push_back((Unit*)unit);
-	units_quadtree.Exteract(unit,&unit->GetPosition());
-	units_quadtree.Insert((Unit*)unit, &unit->GetPosition());
 }
 
 Unit * j1EntitiesManager::PopUnit(const Unit * unit)

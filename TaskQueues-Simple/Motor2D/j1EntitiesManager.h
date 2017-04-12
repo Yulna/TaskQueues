@@ -2,7 +2,6 @@
 #define _ENTITIES_MANAGER_
 
 #include "j1Module.h"
-#include "Quadtree.h"
 
 #include "BaseEntities.h"
 #include "Buildings.h"
@@ -73,9 +72,6 @@ private:
 
 public:
 
-	//Entities Quad Trees to help other modules work with enetities
-	m_QuadTree<Unit*>			units_quadtree;
-	m_QuadTree<Building*>		buildings_quadtree;
 
 	//Functionality -------------------
 	//Load all chosen civilization data
@@ -93,7 +89,6 @@ public:
 
 	//Entities Management Methods
 	bool		SetUnitPath(Unit* target, const iPoint& goal);
-	bool		SetGroupPath(const std::vector<Unit*>& targets, const iPoint& goal);
 
 	//Units lists movement units used in buildings cover
 	void		AddUnit(Unit* unit);

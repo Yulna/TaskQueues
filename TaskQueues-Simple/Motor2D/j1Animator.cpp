@@ -445,21 +445,7 @@ ACTION_TYPE j1Animator::StrToActionEnum(const char* str) const
 	return NO_ACTION;
 }
 
-ITEM_TYPE j1Animator::StrToItemEnum(const char* str) const
-{
-	if (strcmp(str, "axe") == 0)		return AXE;
-	if (strcmp(str, "basket") == 0)		return BASKET;
-	if (strcmp(str, "bow") == 0)		return BOW;
-	if (strcmp(str, "hammer") == 0)		return HAMMER;
-	if (strcmp(str, "pick") == 0)		return PICK;
-	if (strcmp(str, "plow") == 0)		return PLOW;
-	if (strcmp(str, "fish") == 0)		return FISH;
-	if (strcmp(str, "gold") == 0)		return GOLD;
-	if (strcmp(str, "stone") == 0)		return STONE;
-	if (strcmp(str, "wood") == 0)		return WOOD;
-	if (strcmp(str, "meat") == 0)		return MEAT;
-	return NO_ITEM;
-}
+
 
 DIRECTION_TYPE j1Animator::StrToDirectionEnum(const char* str) const
 {
@@ -483,25 +469,6 @@ BUILDING_TYPE j1Animator::StrToBuildingEnum(const char* str) const
 	return NO_BUILDING;
 }
 
-ATTACK_TYPE j1Animator::StrToAttackEnum(const char * str) const
-{
-	if (strcmp(str, "melee") == 0)		return MELEE;
-	if (strcmp(str, "distance") == 0)	return DISTANCE;
-	return NO_ATTACK;
-}
-
-RESOURCE_TYPE j1Animator::StrToResourceEnum(const char * str) const
-{
-	if (strcmp(str, "tree") == 0)		return TREE;
-	if (strcmp(str, "tree_cut") == 0)	return TREE_CUT;
-	if (strcmp(str, "chop") == 0)		return CHOP;
-	if (strcmp(str, "berry_bush") == 0)	return BERRY_BUSH;
-	if (strcmp(str, "gold_ore") == 0)	return GOLD_ORE;
-	if (strcmp(str, "tiny_gold_ore") == 0)	return TINY_GOLD_ORE;
-	if (strcmp(str, "stone_ore") == 0)	return STONE_ORE;
-	if (strcmp(str, "tiny_stone_ore") == 0)	return TINY_STONE_ORE;
-	return NO_RESOURCE;
-}
 
 bool j1Animator::AnimationLoopFromActionType(ACTION_TYPE type)
 {
@@ -663,8 +630,6 @@ bool j1Animator::LoadVillagerBlock(pugi::xml_document* doc)
 		//Allocate the item animation block
 		DiplomaticAnimation_Block* item_animation_block = new DiplomaticAnimation_Block();
 
-		//Set item animation block id
-		item_animation_block->SetId(App->animator->StrToItemEnum(item_node.attribute("id").as_string()));
 
 		//Focus the action node at the first item action
 		action_node = item_node.child("action");
@@ -847,7 +812,6 @@ bool j1Animator::LoadResourceBlock(const char * xml_folder)
 	{
 		//Create a pointer to the new resource AnimationBlock
 		Animation_Block* resource_block = new Animation_Block();
-		resource_block->SetId(StrToResourceEnum(resource_node.attribute("id").as_string()));
 
 		//Focus the first element of the current resource
 		pugi::xml_node element_node = resource_node.first_child();

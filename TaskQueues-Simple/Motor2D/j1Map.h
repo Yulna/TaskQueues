@@ -6,7 +6,6 @@
 #include "PugiXml/src/pugixml.hpp"
 #include "p2Point.h"
 #include "j1Module.h"
-#include "Quadtree.h"
 #include "SDL/include/SDL_rect.h"
 struct SDL_Texture;
 
@@ -189,7 +188,6 @@ public:
 	uchar*				construction_map = nullptr;
 
 private:
-	QuadTree<iPoint>	map_quadtree;
 	std::vector<iPoint> points_in_view;
 	MapLayer*			draw_layer = nullptr;
 	MapLayer*			navigation_layer = nullptr;

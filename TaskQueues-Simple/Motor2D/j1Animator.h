@@ -248,11 +248,8 @@ public:
 	DIPLOMACY		StrToDiplomacyEnum(const char* str)const;
 	UNIT_TYPE		StrToUnitEnum(const char* str)const;
 	ACTION_TYPE		StrToActionEnum(const char* str)const;
-	ITEM_TYPE		StrToItemEnum(const char* str)const;
 	DIRECTION_TYPE	StrToDirectionEnum(const char* str)const;
 	BUILDING_TYPE	StrToBuildingEnum(const char* str)const;
-	ATTACK_TYPE		StrToAttackEnum(const char* str)const;
-	RESOURCE_TYPE	StrToResourceEnum(const char* str)const;
 
 	//Get the loop boolean from the action animation type
 	bool			AnimationLoopFromActionType(ACTION_TYPE type);

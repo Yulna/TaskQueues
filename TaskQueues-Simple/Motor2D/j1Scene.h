@@ -4,6 +4,8 @@
 #include "j1Module.h"
 
 struct SDL_Texture;
+class Unit;
+
 
 class j1Scene : public j1Module
 {
@@ -49,7 +51,11 @@ public:
 	//Load the selected Map
 	bool Load_Current_Map();
 
-	bool LoadScene();
+
+public:
+	Unit* blue_unit = nullptr;
+	Unit* red_unit	= nullptr;
+
 };
 
 #endif // __j1SCENE_H__

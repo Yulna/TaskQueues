@@ -87,9 +87,6 @@
     <ClCompile Include="j1Pathfinding.cpp">
       <Filter>Pathfinding</Filter>
     </ClCompile>
-    <ClCompile Include="j1SoundManager.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1ActionManager.cpp">
       <Filter>Modules\TasksMagament</Filter>
     </ClCompile>
@@ -193,14 +190,8 @@
     <ClInclude Include="j1Pathfinding.h">
       <Filter>Pathfinding</Filter>
     </ClInclude>
-    <ClInclude Include="Quadtree.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
     <ClInclude Include="Actions_Unit.h">
       <Filter>Modules\TasksMagament</Filter>
-    </ClInclude>
-    <ClInclude Include="j1SoundManager.h">
-      <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="j1ActionManager.h">
       <Filter>Modules\TasksMagament</Filter>
