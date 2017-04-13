@@ -262,8 +262,6 @@ public:
 
 	//Animations Methods ----
 	bool UnitPlay(Unit* target);
-	bool BuildingPlay(Building* target);
-	bool ResourcePlay(Resource* target);
 
 };
 #endif // !_J1ANIMATOR_H_

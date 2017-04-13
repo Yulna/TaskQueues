@@ -46,15 +46,6 @@ void j1EntitiesManager::Disable()
 		RELEASE(units_item._Ptr->_Myval);
 		units_item++;
 	}
-
-	//Clean Up buildings list
-	std::list<Building*>::iterator buildings_item = buildings.begin();
-	while (buildings_item != buildings.end())
-	{
-		buildings_item._Ptr->_Myval->CleanMapLogic();
-		RELEASE(buildings_item._Ptr->_Myval);
-		buildings_item++;
-	}
 	
 }
 
@@ -79,16 +70,7 @@ bool j1EntitiesManager::Update(float dt)
 	}
 
 
-	std::list<Building*>::const_iterator item_build = buildings.begin();
 	ret = true;
-
-	while (item_build != buildings.end())
-	{
-
-		ret = item_build._Ptr->_Myval->Update();
-
-		item_build++;
-	}
 
 	return ret;
 }
@@ -106,11 +88,7 @@ bool j1EntitiesManager::PostUpdate()
 		ENTITY_TYPE type = wasted_units[k]->GetEntityType();
 
 		//Remove the entity from the correct list
-		if (type == BUILDING)
-		{
-			buildings.remove((Building*)wasted_units[k]);
-		}
-		else if (type == UNIT)
+		if (type == UNIT)
 		{
 			units.remove((Unit*)wasted_units[k]);
 		}
@@ -162,16 +140,6 @@ bool j1EntitiesManager::CleanUp()
 	units.clear();
 
 
-	//Clean Up buildings list
-	std::list<Building*>::iterator buildings_item = buildings.begin();
-	while (buildings_item != buildings.end())
-	{
-		RELEASE(buildings_item._Ptr->_Myval);
-		buildings_item++;
-	}
-	buildings.clear();
-
-
 	//Clean Up units_defs vector
 	uint size = units_defs.size();
 	for (uint k = 0; k < size; k++)
@@ -179,15 +147,6 @@ bool j1EntitiesManager::CleanUp()
 		RELEASE(units_defs[k]);
 	}
 	units_defs.clear();
-
-
-	//Clean Up buildings_defs vector
-	size = buildings_defs.size();
-	for (uint k = 0; k < size; k++)
-	{
-		RELEASE(buildings_defs[k]);
-	}
-	buildings_defs.clear();
 
 
 	return true;
@@ -281,75 +240,6 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 }
 
 
-bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_node)
-{
-	if (building_node == nullptr)return false;
-
-	//Get building type to allocate the necessary attributes
-	BUILDING_TYPE building_type = App->animator->StrToBuildingEnum(building_node->attribute("building_type").as_string());
-
-	//Generate a new building definition from the node
-	Building* new_def = nullptr;
-
-	//Allocate the correct class
-	if(building_type == TOWN_CENTER || building_type == BARRACK)
-	{
-		new_def = new ProductiveBuilding();
-	}
-
-	//Building ID -----------
-	/*Name*/			new_def->SetName(building_node->attribute("name").as_string());
-	/*Entity Type*/		new_def->SetEntityType(BUILDING);
-	/*Building Type*/	new_def->SetBuildingType(building_type);
-
-	//Building Primitives ---
-	/*Mark*/			Rectng mark;
-	/*Mark Width*/		mark.SetWidth(building_node->attribute("mark_w").as_uint());
-	/*Mark Height*/		mark.SetHeight(building_node->attribute("mark_h").as_uint());
-	/*Mark Displace*/	iPoint displacement(building_node->attribute("mark_x").as_int(), building_node->attribute("mark_y").as_int());
-						mark.SetDisplacement(displacement);
-	/*Mark Color*/		mark.SetColor({ 55,255,255,255 });
-						new_def->SetMark(mark);
-	/*Interaction Area*/Rectng area;
-	/*I.Area Width*/	area.SetWidth(building_node->attribute("interaction_area_w").as_uint());
-	/*I.Area Height*/	area.SetHeight(building_node->attribute("intaraction_area_h").as_uint());
-	/*I.Area Displace*/	displacement.create(building_node->attribute("interaction_area_x").as_int(), building_node->attribute("intaraction_area_y").as_int());
-						area.SetDisplacement(displacement);
-	/*I.Area Color*/	area.SetColor({ 0,0,255,255 });
-						new_def->SetInteractArea(area);
-	/*W. in Tiles*/		new_def->SetWidthInTiles(building_node->attribute("width_in_tiles").as_uint());
-	/*H. in Tiles*/		new_def->SetHeightInTiles(building_node->attribute("height_in_tiles").as_uint());
-	/*Selection Rect*/	SDL_Rect selection_rect;
-	/*S.Rect X*/		selection_rect.x = building_node->attribute("selection_x").as_int();
-	/*S.Rect Y*/		selection_rect.y = building_node->attribute("selection_y").as_int();
-	/*S.Rect W*/		selection_rect.w = building_node->attribute("selection_w").as_int();
-	/*S.Rect H*/		selection_rect.h = building_node->attribute("selection_h").as_int();
-						new_def->SetSelectionRect(selection_rect);
-	/*Icon Rect*/		SDL_Rect icon_rect;
-	/*I.Rect X*/		icon_rect.x = building_node->attribute("icon_x").as_int();
-	/*I.Rect Y*/		icon_rect.y = building_node->attribute("icon_y").as_int();
-	/*I.Rect W*/		icon_rect.w = building_node->attribute("icon_w").as_int();
-	/*I.Rect H*/		icon_rect.h = building_node->attribute("icon_h").as_int();
-						new_def->SetIcon(icon_rect);
-
-	//Building Stats --------
-	/*Max Life*/		new_def->SetMaxLife(building_node->attribute("max_life").as_uint());
-						new_def->SetLife(new_def->GetMaxLife());
-
-	if (building_type == TOWN_CENTER || building_type == BARRACK)
-	{
-		/*Units Capacity*/	((ProductiveBuilding*)new_def)->SetUnitsCapacity(building_node->attribute("units_capacity").as_uint());
-		/*Units Spawn pnt*/	iPoint spawn(building_node->attribute("units_spawn_x").as_int(), building_node->attribute("units_spawn_y").as_int());
-							((ProductiveBuilding*)new_def)->SetUnitsSpawnPoint(spawn);
-		/*Production Cap*/	((ProductiveBuilding*)new_def)->SetProductionCapacity(building_node->attribute("production_capacity").as_uint());
-
-	}
-	buildings_defs.push_back(new_def);
-
-	LOG("%s definition built!", new_def->GetName());
-
-	return true;
-}
 
 //Check if the entity civilizations string contains the chosen one
 bool j1EntitiesManager::CivilizationCheck(char * civs_str, const char * chosen_civ)
@@ -437,7 +327,6 @@ bool j1EntitiesManager::LoadCivilization(const char * folder)
 		switch (App->animator->StrToEntityEnum(entity_node.attribute("id").as_string()))
 		{
 		case UNIT:		AddUnitDefinition(&entity_node.first_child());		break;
-		case BUILDING:	AddBuildingDefinition(&entity_node.first_child());	break;
 
 		default:
 			//Entity ID error case
@@ -500,46 +389,6 @@ Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type, DIPLOMACY diplomacy, bool 
 	return nullptr;
 }
 
-Building* j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type, DIPLOMACY diplomacy, bool push_in_list)
-{
-	Building* new_building = nullptr;
-
-	uint def_num = buildings_defs.size();
-	for (uint k = 0; k < def_num; k++)
-	{
-		if (buildings_defs[k]->GetBuildingType() == type)
-		{
-			if(type == TOWN_CENTER || type == BARRACK)
-			{
-				new_building = new ProductiveBuilding(*(ProductiveBuilding*)buildings_defs[k]);
-				
-			}
-			else
-			{
-				//Build unit
-				new_building = new Building(*buildings_defs[k]);
-			}
-			//Set unit animation
-			App->animator->BuildingPlay(new_building);
-			
-			//Set unit diplomacy
-			new_building->SetDiplomacy(diplomacy);
-			
-			//Set building myself pointer
-			new_building->myself = new_building;
-
-			if (push_in_list)
-			{
-				//Add the new building at the buildings manage list
-				buildings.push_back(new_building);
-
-			}
-
-			return new_building;
-		}
-	}
-	return nullptr;
-}
 
 
 const std::list<Unit*>* j1EntitiesManager::UnitsList() const
@@ -547,10 +396,6 @@ const std::list<Unit*>* j1EntitiesManager::UnitsList() const
 	return &units;
 }
 
-const std::list<Building*>* j1EntitiesManager::BuildingList() const
-{
-	return &buildings;
-}
 
 
 bool j1EntitiesManager::DeleteEntity(Entity * entity)
@@ -605,33 +450,6 @@ Unit * j1EntitiesManager::PopUnit(const Unit * unit)
 	return (Unit*)unit;
 }
 
-Building * j1EntitiesManager::SearchNearestSavePoint(const iPoint & point)
-{
-	std::list<Building*>::const_iterator building = buildings.begin();
-	uint distance = 120 * 120 * 50;
-	Building* nearest_building = nullptr;
-	while (building != buildings.end())
-	{
-		//Check building type
-		if (building._Ptr->_Myval->GetBuildingType() != TOWN_CENTER)
-		{
-			building++;
-			continue;
-		}
-		//Calculate distance between building pos & point
-		uint dist = abs(building._Ptr->_Myval->GetPositionRounded().DistanceNoSqrt(point));
-		//Check if is the nearest building from the point 
-		if ( dist < distance)
-		{
-			distance = dist;
-			nearest_building = building._Ptr->_Myval;
-		}
-
-		building++;
-	}
-
-	return nearest_building;
-}
 
 std::priority_queue<Unit*, std::vector<Unit*>, LessDistance > j1EntitiesManager::OrganizeByNearest(std::vector<Unit*>& vec, Circle& target)
 {

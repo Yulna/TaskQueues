@@ -13,15 +13,7 @@ class ProductiveBuilding;
 class Villager;
 
 class MoveUnitAction;
-class AttackUnitAction;
-class AttackBuildingAction;
-class AttackResourceAction;
-class DieUnitAction;
-class RecollectVillagerAction;
-class SpawnUnitAction;
-class SaveResourcesVillagerAction;
-class StunUnitAction;
-class ScannAction;
+
 
 enum UNIT_TYPE;
 enum BUILDING_TYPE;
@@ -107,7 +99,6 @@ public:
 	void AddPassiveAction(Action* action);
 	void AddSecondaryAction(Action* action);
 	void AddPriorizedAction(Action* action);
-	void PopAction(Action* action);
 
 	//Clean all actionss of the worker
 	void Reset();
@@ -149,16 +140,7 @@ public:
 
 	//Action Calls --------------------
 	//Move Functions
-	MoveUnitAction*				MoveAction(Unit* actor, const iPoint& destination, const iPoint& target = { -1,-1 });
-	MoveUnitAction*				MoveAction(std::vector<iPoint>* path, Unit* actor, const iPoint& target = { -1,-1 });
-
-
-	// Building Functions
-	SpawnUnitAction*			SpawnAction(ProductiveBuilding* actor, UNIT_TYPE type, DIPLOMACY diplomacy);
-	
-	//Passive actions----------------
-	//Scann for units
-	ScannAction*				ScanAction(Entity* actor);
+	MoveUnitAction*				MoveAction(Unit* actor, const iPoint& destination);
 
 private:
 

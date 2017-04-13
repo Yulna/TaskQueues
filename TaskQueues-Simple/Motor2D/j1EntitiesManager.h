@@ -4,7 +4,7 @@
 #include "j1Module.h"
 
 #include "BaseEntities.h"
-#include "Buildings.h"
+
 
 class Action;
 class ActionManager;
@@ -52,7 +52,6 @@ private:
 
 	//Lists of current game entities
 	std::list<Unit*>		units;
-	std::list<Building*>	buildings;
 
 
 	//Vector where all the killed/destroyed entities are placed
@@ -60,12 +59,10 @@ private:
 
 	//Vector of predefined units
 	std::vector<Unit*>		units_defs;
-	std::vector<Building*>	buildings_defs;
 
 
 	//Methods to add entities definitions
 	bool		AddUnitDefinition(const pugi::xml_node* unit_node);
-	bool		AddBuildingDefinition(const pugi::xml_node* building_node);
 
 	//Check if the entity civilizations string contains the chosen one
 	bool		CivilizationCheck(char* civs_str, const char* chosen_civ);
@@ -78,7 +75,6 @@ public:
 	bool		LoadCivilization(const char* folder);
 	//Factory Methods -------
 	Unit*		GenerateUnit(UNIT_TYPE type, DIPLOMACY diplomacy, bool push_in_list = true);
-	Building*	GenerateBuilding(BUILDING_TYPE type, DIPLOMACY diplomacy, bool push_in_list = true);
 
 	//Get Methods -----------
 	const std::list<Unit*>*		UnitsList()const;
@@ -95,7 +91,6 @@ public:
 	Unit*		PopUnit(const Unit* unit);
 
 	//Get the nearest resource save point from the coordinate
-	Building* SearchNearestSavePoint(const iPoint& point);
 
 	//Organize unit vector
 	std::priority_queue<Unit*, std::vector<Unit*>, LessDistance > OrganizeByNearest(std::vector<Unit*>& vec, Circle& target);

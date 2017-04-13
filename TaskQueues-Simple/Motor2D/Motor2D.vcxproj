@@ -78,7 +78,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BaseEntities.cpp" />
-    <ClCompile Include="Buildings.cpp" />
     <ClCompile Include="Iso_Primitives.cpp" />
     <ClCompile Include="j1Animator.cpp" />
     <ClCompile Include="j1EntitiesManager.cpp" />
@@ -111,8 +110,6 @@
     <ClCompile Include="UI_Text_Box.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Actions_Building.h" />
-    <ClInclude Include="Buildings.h" />
     <ClInclude Include="Iso_Primitives.h" />
     <ClInclude Include="BaseEntities.h" />
     <ClInclude Include="j1Animator.h" />

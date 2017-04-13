@@ -90,9 +90,6 @@
     <ClCompile Include="j1ActionManager.cpp">
       <Filter>Modules\TasksMagament</Filter>
     </ClCompile>
-    <ClCompile Include="Buildings.cpp">
-      <Filter>Modules\EnititiesManager\Entities</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -196,12 +193,6 @@
     <ClInclude Include="j1ActionManager.h">
       <Filter>Modules\TasksMagament</Filter>
     </ClInclude>
-    <ClInclude Include="Actions_Building.h">
-      <Filter>Modules\TasksMagament</Filter>
-    </ClInclude>
-    <ClInclude Include="Buildings.h">
-      <Filter>Modules\EnititiesManager\Entities</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -233,9 +224,6 @@
     </Filter>
     <Filter Include="Modules\TasksMagament">
       <UniqueIdentifier>{0b086b82-d4b0-4f1c-871b-f1fa6dc611f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Modules\AI">
-      <UniqueIdentifier>{753ec0cd-567d-42d6-b8fb-12dc59d9dc40}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

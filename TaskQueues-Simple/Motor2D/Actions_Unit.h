@@ -19,11 +19,6 @@ public:
 	{
 	}
 
-	MoveUnitAction(Unit* actor, std::vector<iPoint>* path, const iPoint& target) : Action(actor, TASK_U_MOVE), path(path),target(target)
-	{
-		destination = path->front();
-	}
-
 	//Destructor ------------
 	~MoveUnitAction()
 	{
@@ -40,10 +35,9 @@ public:
 		path = App->pathfinding->SimpleAstar(origin, destination);
 		if (path == nullptr)return false;
 		
+		//Animation methods uncomment it when Activation is done
 		((Unit*)actor)->SetAction(WALK);
 		((Unit*)actor)->Focus(path->back(),true);
-		if (path->size() > 2)	((Unit*)actor)->SetFutureAction(*(path->rbegin() + 1));
-		else					((Unit*)actor)->SetFutureAction(iPoint(-1, -1));
 
 		return true;
 	}
@@ -69,63 +63,5 @@ private:
 /// ---------------------------------------------
 
 
-
-
-
-
-///Scann for units action------------------------
-class ScannAction : public Action
-{
-public:
-
-	//Constructor -------------
-	ScannAction(Unit* actor) : Action(actor, TASK_U_SCANN)
-	{
-
-	}
-
-	//Destructor ------------
-	~ScannAction()
-	{
-		this->actor = nullptr;
-		surrounding_units.clear();
-		surrounding_buildings.clear();
-	}
-
-public:
-
-	bool Execute()
-	{
-		if (actor->GetWorker()->GetCurrentActionType() == TASK_U_DIE) return true;
-
-		surrounding_units.clear();
-		surrounding_buildings.clear();
-
-		App->entities_manager->OrganizeByNearest(surrounding_units, actor->GetVision());
-		uint size = surrounding_units.size();
-
-			for (uint i = 0; i < size; i++)
-			{
-				if (actor->GetDiplomacy() != surrounding_units[i]->GetDiplomacy() && surrounding_units[i]->GetAction() != (DIE || DISAPPEAR))
-				{
-					return false;
-				}
-			};
-
-
-		return false;
-	};
-
-
-private:
-
-	std::vector<Unit*> surrounding_units;
-	std::vector<Building*> surrounding_buildings;
-};
-
-
-
-
-///----------------------------------------------
 #endif // !__ACTION_UNIT_H__
 

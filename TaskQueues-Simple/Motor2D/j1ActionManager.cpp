@@ -1,6 +1,5 @@
 #include "j1ActionManager.h"
 #include "Actions_Unit.h"
-#include "Actions_Building.h"
 
 
 ///Class Action ---------------------------------
@@ -22,7 +21,6 @@ TASK_TYPE Action::GetType()
 	return type;
 }
 /// ---------------------------------------------
-
 
 
 /// Action Manager ------------------------------
@@ -51,44 +49,12 @@ bool j1ActionManager::CleanUp()
 }
 
 //Action Calls ========================
-MoveUnitAction* j1ActionManager::MoveAction(Unit * actor, const iPoint& destination, const iPoint& target)
+MoveUnitAction* j1ActionManager::MoveAction(Unit * actor, const iPoint& destination)
 {
 	//Generate a new move action definition
-	MoveUnitAction* action = new MoveUnitAction(actor, destination, target);
+	MoveUnitAction* action = new MoveUnitAction(actor, destination);
 
 	//Add the new action at the action manager
-	all_actions.push_back(action);
-
-	return action;
-}
-
-MoveUnitAction* j1ActionManager::MoveAction(std::vector<iPoint>* path, Unit * actor, const iPoint& target )
-{
-	//Generate a new move action definition
-	MoveUnitAction* action = new MoveUnitAction(actor, path,target);
-
-	//Add the new action at the action manager
-	all_actions.push_back(action);
-
-	return action;
-}
-
-
-
-
-SpawnUnitAction* j1ActionManager::SpawnAction(ProductiveBuilding * actor, UNIT_TYPE type, DIPLOMACY diplomacy)
-{
-	SpawnUnitAction* action = new SpawnUnitAction(actor, type, diplomacy);
-
-	all_actions.push_back(action);
-
-	return action;
-}
-
-ScannAction * j1ActionManager::ScanAction(Entity * actor)
-{
-	ScannAction* action = new ScannAction((Unit*)actor);
-
 	all_actions.push_back(action);
 
 	return action;
@@ -203,23 +169,6 @@ void ActionWorker::AddPriorizedAction(Action * action)
 	}
 }
 
-void ActionWorker::PopAction(Action * action)
-{
-	if (current_action == action)current_action = nullptr;
-	else
-	{
-		std::list<Action*>::iterator act = action_queue.begin();
-		while (act != action_queue.end())
-		{
-			if (act._Ptr->_Myval == action)
-			{
-				action_queue.remove(action);
-				return;
-			}
-			act++;
-		}
-	}
-}
 
 void ActionWorker::Reset()
 {
