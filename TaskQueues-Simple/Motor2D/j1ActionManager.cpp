@@ -40,9 +40,7 @@ j1ActionManager::~j1ActionManager()
 //Game Loop ===========================
 bool j1ActionManager::CleanUp()
 {
-
 	//Freeing space of all actions created
-
 	all_actions.clear();
 
 	return true;
@@ -59,7 +57,6 @@ MoveUnitAction* j1ActionManager::MoveAction(Unit * actor, const iPoint& destinat
 
 	return action;
 }
-
 /// ---------------------------------------------
 
 
@@ -74,8 +71,6 @@ ActionWorker::ActionWorker() : refresh_rate(500)
 ActionWorker::~ActionWorker()
 {
 	ResetQueue(&action_queue, &current_action);
-	ResetQueue(&passive_action_queue, &current_passive_action);
-	ResetQueue(&secondary_action_queue, &current_secondary_action);
 }
 
 //Worker methods
@@ -86,26 +81,7 @@ void ActionWorker::Update()
 		return;
 		
 	//If the worker has a current action execute it
-	if (DoWork(&action_queue, &current_action))
-	{
-
-		//Reeactive all actions form passive flows when any active action finshes
-		if(current_secondary_action != nullptr)	current_secondary_action->Activation();
-		if(current_passive_action != nullptr)	current_passive_action->Activation();
-	}
-
-	//Secondary and passive actions take place when there is no active_action
-	if (current_action == nullptr)
-	{
-		DoWork(&secondary_action_queue, &current_secondary_action);
-
-		//Make the passive_action logic only work on a refresh rate
-		if (refresh_timer.Read() > refresh_rate)
-		{
-			DoWork(&passive_action_queue, &current_passive_action);
-			refresh_timer.Start();
-		}
-	}
+	DoWork(&action_queue, &current_action);
 }
 
 bool ActionWorker::DoWork(std::list<Action*>* queue, Action ** current)
