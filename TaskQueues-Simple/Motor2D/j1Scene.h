@@ -52,10 +52,6 @@ public:
 	bool Load_Current_Map();
 
 
-public:
-	Unit* blue_unit = nullptr;
-	Unit* red_unit	= nullptr;
-
 };
 
 #endif // __j1SCENE_H__

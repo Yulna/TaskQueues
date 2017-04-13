@@ -70,15 +70,14 @@ bool j1Scene::Start()
 	App->render->camera.y = -camera_pos.y;
 	App->map->CalculateTilesInView();
 
-
 	//load troops
-	blue_unit = App->entities_manager->GenerateUnit(MILITIA, ALLY, true);
+	App->player->blue_unit = App->entities_manager->GenerateUnit(MILITIA, ALLY, true);
 	iPoint blue_pos = App->map->MapToWorld(103, 103);
-	blue_unit->SetPosition(blue_pos.x, blue_pos.y);
+	App->player->blue_unit->SetPosition(blue_pos.x, blue_pos.y);
 
-	red_unit = App->entities_manager->GenerateUnit(MILITIA, ENEMY, true);
+	App->player->red_unit = App->entities_manager->GenerateUnit(MILITIA, ENEMY, true);
 	iPoint red_pos = App->map->MapToWorld(109, 109);
-	red_unit->SetPosition(red_pos.x, red_pos.y);
+	App->player->red_unit->SetPosition(red_pos.x, red_pos.y);
 
 
 

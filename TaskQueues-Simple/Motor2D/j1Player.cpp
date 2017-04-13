@@ -5,6 +5,7 @@
 #include "j1Textures.h"
 #include "j1Input.h"
 #include "j1Animator.h"
+#include "j1Map.h"
 
 #include "j1App.h"
 #include "j1Window.h"
@@ -50,6 +51,10 @@ bool j1Player::Awake(pugi::xml_node& config)
 
 bool j1Player::Start()
 {
+
+	left_click = new MoveBlue;
+	right_click = new MoveRed;
+
 	return true;
 }
 
@@ -60,48 +65,53 @@ bool j1Player::PreUpdate()
 	App->input->GetMousePosition(x, y);
 
 
+	//TODO 1: Execute the left and right click tasks------------------
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
-
+		if(left_click != nullptr) left_click->Execute();
 	}
 	
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
-
+		if (right_click != nullptr)	right_click->Execute();
 	}
+	//-----------------------------------------------------------------
 
 
-
-	if (App->debug_mode)
+	//TODO 3:Swap the right and left click functionality
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 	{
-		//Generate a town center in the mouse coordinates
-		if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
-		{
-			Building* center = App->entities_manager->GenerateBuilding(BUILDING_TYPE::BARRACK, ALLY);
-			center->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
-			center->SetDiplomacy(ALLY);
-
-		}
-		//Generate a Militia unit in the mouse coordinates
-		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
-		{
-			Unit* new_unit = App->entities_manager->GenerateUnit(MILITIA, ENEMY);
-			new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
-
-			//game_panel->IncressPopulation(1, false);
-		}
-		//Generate a Arbalest unit in the mouse coordinates
-		if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN /*&& game_panel->CheckPopulation()*/)
-		{
-			Unit* new_unit = App->entities_manager->GenerateUnit(ARBALEST, ALLY);
-			new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
-			new_unit->AddPasiveAction(App->action_manager->ScanAction(new_unit));
-		}
-
+		InputTask* temp = left_click;
+		left_click = right_click;
+		right_click = temp;
 	}
+	//------------------------------------------------------------------
 	
 	return true;
 }
+
+//TODO 2: Fill the execute functions so it move the units---------------
+void MoveBlue::Execute()
+{
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	LOG("Moving blue...");
+
+	App->player->blue_unit->GetWorker()->Reset();
+	App->player->blue_unit->AddAction(App->action_manager->MoveAction(App->player->blue_unit, iPoint(x - App->render->camera.x, y - App->render->camera.y)));
+}
+
+void MoveRed::Execute()
+{
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	LOG("Moving red...");
+
+	App->player->red_unit->GetWorker()->Reset();
+	App->player->red_unit->AddAction(App->action_manager->MoveAction(App->player->red_unit, iPoint(x - App->render->camera.x, y - App->render->camera.y)));
+}
+//-----------------------------------------------------------------------
+
 
 bool j1Player::PostUpdate()
 {
@@ -155,3 +165,4 @@ void j1Player::GUI_Input(UI_Element* target, GUI_INPUT input)
 		break;
 	}
 }
+

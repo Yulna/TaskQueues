@@ -8,7 +8,6 @@
 
 class Entity;
 class Unit;
-class Resource;
 class Building;
 class ProductiveBuilding;
 class Villager;
@@ -152,12 +151,6 @@ public:
 	//Move Functions
 	MoveUnitAction*				MoveAction(Unit* actor, const iPoint& destination, const iPoint& target = { -1,-1 });
 	MoveUnitAction*				MoveAction(std::vector<iPoint>* path, Unit* actor, const iPoint& target = { -1,-1 });
-	
-	//Attack Functions
-	AttackUnitAction*			AttackToUnitAction(Unit* actor, Unit** target);
-	AttackBuildingAction*		AttackToBuildingAction(Unit* actor, Building** target);
-	DieUnitAction*				DieAction(Unit* actor);
-
 
 
 	// Building Functions

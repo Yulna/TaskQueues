@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "j1Timer.h"
 #include "p2Point.h"
+#include "p2Log.h"
 #include "SDL\include\SDL_rect.h"
 
 
@@ -23,11 +24,36 @@ class Game_Panel;
 class Action_Panel;
 
 
-enum ACTION
+
+
+class InputTask
 {
-	LCLICK,
-	RCLICK
+public:
+	InputTask() {};
+	~InputTask() {};
+
+	virtual void Execute() {};
 };
+
+
+class MoveBlue : public InputTask
+{
+public:
+	MoveBlue() {};
+	~MoveBlue() {};
+
+	void Execute();
+};
+
+class MoveRed : public InputTask
+{
+public:
+	MoveRed() {};
+	~MoveRed() {};
+
+	void Execute();
+};
+
 //Animator Module -------------------------------
 class j1Player : public j1Module
 {
@@ -66,10 +92,14 @@ public:
 
 private:
 
-	std::string				civilization;
+	std::string			civilization;
 
+	InputTask*			right_click = nullptr;
+	InputTask*			left_click  = nullptr;
 
-
+public:
+	Unit* blue_unit = nullptr;
+	Unit* red_unit = nullptr;
 
 };
 #endif // !_J1PLAYER_H_
