@@ -148,10 +148,7 @@ public:
 	virtual void	CleanMapLogic();
 	//Add Action ------------
 	void			AddAction(Action* action);
-	void			AddPasiveAction(Action* action);
-	void			AddSecondaryAction(Action * action);
 	void			AddPriorizedAction(Action* action);
-	void			PopAction(Action* action);
 
 	//Set Methods -----------
 	void			SetName(const char* name_str);
@@ -234,7 +231,7 @@ public:
 	bool	Draw(bool debug);
 
 	//Actions ---------------
-	bool					Move(std::vector<iPoint>*& path, const iPoint& target = { -1,-1 });
+	bool					Move(std::vector<iPoint>*& path);
 	void					Repath(std::vector<iPoint>*& path,const iPoint & destination);
 	void					CorrectPath(std::vector<iPoint>*& path);
 	iPoint					NextGoal(std::vector<iPoint>* path);

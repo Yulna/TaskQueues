@@ -63,7 +63,7 @@ MoveUnitAction* j1ActionManager::MoveAction(Unit * actor, const iPoint& destinat
 
 ///Action Worker---------------------------------
 //Constructor
-ActionWorker::ActionWorker() : refresh_rate(500)
+ActionWorker::ActionWorker()
 {
 }
 
@@ -80,8 +80,43 @@ void ActionWorker::Update()
 	if (paused)
 		return;
 		
-	//If the worker has a current action execute it
-	DoWork(&action_queue, &current_action);
+	
+	if (current_action != nullptr)
+	{
+		//TODO 7: 
+
+		//If the action ends (execute() == true) erase it
+		if (current_action->Execute())
+		{
+			delete current_action;
+			current_action = nullptr;
+			return;
+		}
+		return;
+	}
+	//If the worker has any waiting actions mark the first one as current
+	else if (!action_queue.empty())
+	{
+		//TODO 6: Pick the next action from the queue and Activate it
+		//The first action form the list should be now the current_action and removed from the list
+		//Don't foget to delete it if the Activation() fails
+
+		current_action = action_queue.front();
+		action_queue.pop_front();
+
+		//Delete action if it can't be activated
+		if (!current_action->Activation())
+		{
+			delete current_action;
+			current_action = nullptr;
+		}
+	}
+	return;
+
+
+
+	//Fancy ways of doing things
+	//DoWork(&action_queue, &current_action);
 }
 
 bool ActionWorker::DoWork(std::list<Action*>* queue, Action ** current)
@@ -120,16 +155,6 @@ void ActionWorker::AddAction(Action * action)
 	action_queue.push_back(action);
 }
 
-void ActionWorker::AddPassiveAction(Action* action)
-{
-	passive_action_queue.push_back(action);
-}
-
-void ActionWorker::AddSecondaryAction(Action * action)
-{
-	secondary_action_queue.push_back(action);
-}
-
 void ActionWorker::AddPriorizedAction(Action * action)
 {
 	if (current_action != nullptr)
@@ -149,7 +174,6 @@ void ActionWorker::AddPriorizedAction(Action * action)
 void ActionWorker::Reset()
 {
 	ResetQueue(&action_queue, &current_action);
-	ResetQueue(&passive_action_queue, &current_passive_action);
 
 	paused = false;
 }

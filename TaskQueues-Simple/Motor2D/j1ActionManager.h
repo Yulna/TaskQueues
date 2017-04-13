@@ -8,32 +8,15 @@
 
 class Entity;
 class Unit;
-class Building;
-class ProductiveBuilding;
-class Villager;
 
 class MoveUnitAction;
 
-
 enum UNIT_TYPE;
-enum BUILDING_TYPE;
-enum RESOURCE_TYPE;
-enum DIPLOMACY;
-
 
 enum TASK_TYPE
 {
 	TASK_NONE = 0,
 	TASK_U_MOVE,
-	TASK_U_ATTACK_U,
-	TASK_U_ATTACK_B,
-	TASK_U_DIE,
-	TASK_B_DIE,
-	TASK_U_STUN,
-	TASK_U_RECOLLECT,
-	TASK_U_SAVE_RESOURCES,
-	TASK_U_SCANN,
-	TASK_B_SPAWN_UNITS
 };
 
 
@@ -48,19 +31,21 @@ public:
 	~Action();
 
 protected:
-
+	//Since this class Action will be used purely for the AI on entities
+	//we store a pointer to the entity in the base class
 	Entity*					actor = nullptr;
 	TASK_TYPE				type = TASK_NONE;
 
 public:
 
-	//This function defines the action taking place
-	//Returns false if Action was unable to initialize
+	//Returns false if the Action couldn't be activated
 	virtual bool Activation() { return true; }
-	//Returns TRUE when execute is finished
+
+	//See that this time the Execute() returns a bool to allow us to know
+	//if the action is in progress or it has ended
+	///Returns TRUE when the action finishes
 	virtual bool Execute()	{ return true; }
-	///Each different action inheriting from this class should have custom
-	///properties to do its actions.
+
 
 	//Get methods -----------
 	TASK_TYPE GetType();
@@ -80,24 +65,15 @@ public:
 private:
 
 	std::list<Action*> action_queue;
-	std::list<Action*> secondary_action_queue;
-	std::list<Action*> passive_action_queue;
-	Action* current_passive_action = nullptr;
-	Action* current_secondary_action = nullptr;
 	Action* current_action = nullptr;
 	bool paused = false;
 
-private:
-	j1Timer refresh_timer;
-	uint	refresh_rate = 0;
 
 public:
 	//Updates every list
 	void Update();
 
 	void AddAction(Action* action);
-	void AddPassiveAction(Action* action);
-	void AddSecondaryAction(Action* action);
 	void AddPriorizedAction(Action* action);
 
 	//Clean all actionss of the worker
@@ -119,8 +95,6 @@ private:
 
 	//Resets a list and their current  action
 	void ResetQueue(std::list<Action*>* queue, Action** current);
-
-
 };
 ///----------------------------------------------
 

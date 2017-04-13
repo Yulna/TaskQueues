@@ -99,24 +99,9 @@ void Entity::AddAction(Action * action)
 	action_worker.AddAction(action);
 }
 
-void Entity::AddPasiveAction(Action * action)
-{
-	action_worker.AddPassiveAction(action);
-}
-
-void Entity::AddSecondaryAction(Action * action)
-{
-	action_worker.AddSecondaryAction(action);
-}
-
 void Entity::AddPriorizedAction(Action * action)
 {
 	action_worker.AddPriorizedAction(action);
-}
-
-void Entity::PopAction(Action * action)
-{
-	action_worker.PopAction(action);
 }
 
 //Set Methods -----
@@ -310,7 +295,7 @@ bool Unit::Draw(bool debug)
 
 
 //Actions ---------
-bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns true when it ends
+bool Unit::Move(std::vector<iPoint>*& path) ///Returns true when it ends
 {
 	//Check if the unit have an assigned path
 	if (path == nullptr)
