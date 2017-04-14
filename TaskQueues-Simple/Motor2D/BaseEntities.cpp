@@ -352,6 +352,11 @@ bool Unit::Move(std::vector<iPoint>*& path) ///Returns true when it ends
 	return false;
 }
 
+void Unit::MoveNow(iPoint des)
+{
+	AddAction(App->action_manager->MoveAction(this, des));
+}
+
 void Unit::Repath(std::vector<iPoint>*& path,const iPoint & destination)
 {
 	iPoint new_destination = FindWalkableCell(destination);

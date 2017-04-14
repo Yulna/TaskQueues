@@ -232,6 +232,7 @@ public:
 
 	//Actions ---------------
 	bool					Move(std::vector<iPoint>*& path);
+	void					MoveNow(iPoint des);
 	void					Repath(std::vector<iPoint>*& path,const iPoint & destination);
 	void					CorrectPath(std::vector<iPoint>*& path);
 	iPoint					NextGoal(std::vector<iPoint>* path);

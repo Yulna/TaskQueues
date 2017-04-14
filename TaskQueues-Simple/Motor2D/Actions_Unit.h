@@ -29,7 +29,7 @@ public:
 	//Functionality ---------
 	bool Activation()
 	{
-		//TODO 4: Fill the activation method---------------------------------------
+		//TODO 3: Fill the activation method---------------------------------------
 		//We need to store the actual position of the entity as origin and calculate a path to the destination
 		///App->pathfinding->SimpleAstar(...) will return us an iPoint vector to use as path
 		iPoint origin(actor->GetPosition().x, actor->GetPosition().y);
@@ -47,7 +47,7 @@ public:
 
 	bool Execute()
 	{
-		//TODO 5: Fill the Execute() method
+		//TODO 4: Fill the Execute() method
 		//Easy one, just call the Move method in the Unit class, the Move method already returns true when it ends the path
 		return ((Unit*)actor)->Move(path);
 	}

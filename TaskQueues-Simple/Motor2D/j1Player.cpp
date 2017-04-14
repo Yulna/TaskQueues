@@ -78,7 +78,7 @@ bool j1Player::PreUpdate()
 	//-----------------------------------------------------------------
 
 
-	//TODO 3:Swap the right and left click functionality
+	//TODO 2:Swap the right and left click functionality
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 	{
 		InputTask* temp = left_click;
@@ -90,15 +90,17 @@ bool j1Player::PreUpdate()
 	return true;
 }
 
-//TODO 2: Fill the execute functions so it move the units---------------
+//TODO 8: Fill the execute functions so it move the units---------------
 void MoveBlue::Execute()
 {
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	LOG("Moving blue...");
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) != KEY_REPEAT)
+		App->player->blue_unit->GetWorker()->Reset();
 
-	App->player->blue_unit->GetWorker()->Reset();
-	App->player->blue_unit->AddAction(App->action_manager->MoveAction(App->player->blue_unit, iPoint(x - App->render->camera.x, y - App->render->camera.y)));
+	App->player->blue_unit->MoveNow(iPoint(x - App->render->camera.x, y - App->render->camera.y));
+	//App->player->blue_unit->AddAction(App->action_manager->MoveAction(App->player->blue_unit, iPoint(x - App->render->camera.x, y - App->render->camera.y)));
 }
 
 void MoveRed::Execute()
@@ -106,8 +108,9 @@ void MoveRed::Execute()
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	LOG("Moving red...");
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) != KEY_REPEAT)
+		App->player->red_unit->GetWorker()->Reset();
 
-	App->player->red_unit->GetWorker()->Reset();
 	App->player->red_unit->AddAction(App->action_manager->MoveAction(App->player->red_unit, iPoint(x - App->render->camera.x, y - App->render->camera.y)));
 }
 //-----------------------------------------------------------------------

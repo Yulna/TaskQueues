@@ -83,7 +83,7 @@ void ActionWorker::Update()
 	
 	if (current_action != nullptr)
 	{
-		//TODO 7: 
+		//TODO 6: 
 
 		//If the action ends (execute() == true) erase it
 		if (current_action->Execute())
@@ -97,7 +97,7 @@ void ActionWorker::Update()
 	//If the worker has any waiting actions mark the first one as current
 	else if (!action_queue.empty())
 	{
-		//TODO 6: Pick the next action from the queue and Activate it
+		//TODO 5: Pick the next action from the queue and Activate it
 		//The first action form the list should be now the current_action and removed from the list
 		//Don't foget to delete it if the Activation() fails
 
@@ -173,9 +173,23 @@ void ActionWorker::AddPriorizedAction(Action * action)
 
 void ActionWorker::Reset()
 {
-	ResetQueue(&action_queue, &current_action);
+	//TODO 7: Free all actions on the worker
+	delete current_action;
+	current_action = nullptr;
+
+	Action* to_erase;
+	while (!action_queue.empty())
+	{
+		to_erase = action_queue.front();
+		action_queue.pop_front();
+		RELEASE(to_erase);
+	}
+	action_queue.clear();
+	//---
 
 	paused = false;
+	//Fany way of doing it
+	//ResetQueue(&action_queue, &current_action);
 }
 
 void ActionWorker::ResetActive()
