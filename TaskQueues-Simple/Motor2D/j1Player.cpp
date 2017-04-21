@@ -46,7 +46,6 @@ bool j1Player::Awake(pugi::xml_node& config)
 
 bool j1Player::Start()
 {
-
 	left_click = new MoveBlue;
 	right_click = new MoveRed;
 
@@ -74,7 +73,7 @@ bool j1Player::PreUpdate()
 
 
 	//TODO 2:Swap the right and left click functionality
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
 	{
 		InputTask* temp = left_click;
 		left_click = right_click;
@@ -85,30 +84,43 @@ bool j1Player::PreUpdate()
 	return true;
 }
 
-//TODO 8: Fill the execute functions so it move the units---------------
+
 void MoveBlue::Execute()
 {
+	LOG("Moving blue...");
+	
+	//TODO 9: Uncomment this when you have finished the AI part
+
 	int x, y;
 	App->input->GetMousePosition(x, y);
-	LOG("Moving blue...");
+	
+	//Reset the worker so our input overwrithes the previous ones
+	//Don't reset if left shift is pressed so we can define a predefined path of movements.
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) != KEY_REPEAT)
 		App->player->blue_unit->GetWorker()->Reset();
 
-	App->player->blue_unit->MoveNow(iPoint(x - App->render->camera.x, y - App->render->camera.y));
-	//App->player->blue_unit->AddAction(App->action_manager->MoveAction(App->player->blue_unit, iPoint(x - App->render->camera.x, y - App->render->camera.y)));
+	App->player->blue_unit->AddAction(App->action_manager->MoveAction(App->player->blue_unit, iPoint(x - App->render->camera.x, y - App->render->camera.y)));
+	//------------------------------------------------------------
 }
 
 void MoveRed::Execute()
 {
+	LOG("Moving red...");
+
+
+	//TODO 9: Uncomment this when you have finished the AI part
 	int x, y;
 	App->input->GetMousePosition(x, y);
-	LOG("Moving red...");
+
+	//Reset the worker so our input overwrithes the previous ones
+	//Don't reset if left shift is pressed so we can define a predefined path of movements.
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) != KEY_REPEAT)
 		App->player->red_unit->GetWorker()->Reset();
 
 	App->player->red_unit->AddAction(App->action_manager->MoveAction(App->player->red_unit, iPoint(x - App->render->camera.x, y - App->render->camera.y)));
+	//----------------------------------------------------------
 }
-//-----------------------------------------------------------------------
+
 
 
 bool j1Player::PostUpdate()

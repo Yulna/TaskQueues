@@ -99,11 +99,6 @@ void Entity::AddAction(Action * action)
 	action_worker.AddAction(action);
 }
 
-void Entity::AddPriorizedAction(Action * action)
-{
-	action_worker.AddPriorizedAction(action);
-}
-
 //Set Methods -----
 void Entity::SetName(const char * name_str)
 {
@@ -352,10 +347,6 @@ bool Unit::Move(std::vector<iPoint>*& path) ///Returns true when it ends
 	return false;
 }
 
-void Unit::MoveNow(iPoint des)
-{
-	AddAction(App->action_manager->MoveAction(this, des));
-}
 
 void Unit::Repath(std::vector<iPoint>*& path,const iPoint & destination)
 {

@@ -13,10 +13,6 @@ struct SDL_Texture;
 
 class Entity;
 class Unit;
-class Resource;
-class Building;
-
-class Entity_Profile;
 
 
 class InputTask
@@ -80,10 +76,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+
 private:
-
-	std::string			civilization;
-
 	InputTask*			right_click = nullptr;
 	InputTask*			left_click  = nullptr;
 

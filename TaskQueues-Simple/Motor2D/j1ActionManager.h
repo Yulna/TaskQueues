@@ -56,22 +56,16 @@ private:
 
 	std::list<Action*> action_queue;
 	Action* current_action = nullptr;
-	bool paused = false;
-
 
 public:
 	//Updates every list
 	void Update();
 
 	void AddAction(Action* action);
-	void AddPriorizedAction(Action* action);
 
 	//Clean all actionss of the worker
 	void Reset();
-	void ResetActive();
 
-	void Pause();
-	void Restart();
 
 private:
 
@@ -80,7 +74,7 @@ private:
 	//Returns true if the current action has been executed correctly
 	bool DoWork(std::list<Action*>* queue, Action** current);
 
-	//Resets a list and their current  action
+	//Resets a list and their current  action	
 	void ResetQueue(std::list<Action*>* queue, Action** current);
 };
 ///----------------------------------------------

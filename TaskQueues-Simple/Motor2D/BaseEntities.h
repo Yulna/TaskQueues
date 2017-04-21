@@ -148,7 +148,6 @@ public:
 	virtual void	CleanMapLogic();
 	//Add Action ------------
 	void			AddAction(Action* action);
-	void			AddPriorizedAction(Action* action);
 
 	//Set Methods -----------
 	void			SetName(const char* name_str);
@@ -232,7 +231,6 @@ public:
 
 	//Actions ---------------
 	bool					Move(std::vector<iPoint>*& path);
-	void					MoveNow(iPoint des);
 	void					Repath(std::vector<iPoint>*& path,const iPoint & destination);
 	void					CorrectPath(std::vector<iPoint>*& path);
 	iPoint					NextGoal(std::vector<iPoint>* path);
@@ -277,7 +275,6 @@ public:
 	const Circle*	GetAttackArea()const;
 	uint			GetTrainTime()const;
 	uint			GetExp()const;
-	std::vector<iPoint>* GetPath() const;
 
 };
 /// ---------------------------------------------

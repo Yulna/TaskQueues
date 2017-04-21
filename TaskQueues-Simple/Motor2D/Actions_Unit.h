@@ -38,11 +38,11 @@ public:
 		//If we don't get a valid path return false to indicate that activation has failed
 		if (path == nullptr)return false;
 		
+
 		//Animation methods uncomment it when Activation is done
 		((Unit*)actor)->SetAction(WALK);
 		((Unit*)actor)->Focus(path->back(),true);
 		return true;
-
 	}
 
 	bool Execute()
@@ -61,7 +61,6 @@ public:
 private:
 
 	std::vector<iPoint>* path = nullptr;
-
 	iPoint destination;
 };
 /// ---------------------------------------------

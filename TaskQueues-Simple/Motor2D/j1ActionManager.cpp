@@ -71,15 +71,10 @@ ActionWorker::~ActionWorker()
 //Worker methods
 void ActionWorker::Update()
 {
-	//Don't update if the worker is paused
-	if (paused)
-		return;
-		
 	
 	if (current_action != nullptr)
 	{
-		//TODO 6: 
-		//Execute the action
+		//TODO 7: Execute the action
 		//If the action ends (execute() == true) erase it and set it to null
 		if (current_action->Execute())
 		{
@@ -92,8 +87,8 @@ void ActionWorker::Update()
 	//If the worker has any waiting actions mark the first one as current
 	else if (!action_queue.empty())
 	{
-		//TODO 5: Pick the next action from the queue and Activate it
-		//The first action form the list should be now the current_action and removed from the list
+		//TODO 6: Pick the next action from the queue and Activate it
+		//The first action form the list should be now the current_action and be removed from the list
 		//Don't foget to delete it if the Activation() fails
 
 		current_action = action_queue.front();
@@ -147,28 +142,14 @@ bool ActionWorker::DoWork(std::list<Action*>* queue, Action ** current)
 
 void ActionWorker::AddAction(Action * action)
 {
+	//TODO 5: Add the new action to the list
 	action_queue.push_back(action);
-}
-
-void ActionWorker::AddPriorizedAction(Action * action)
-{
-	if (current_action != nullptr)
-	{
-		action_queue.push_front(current_action);
-		current_action = action;
-		current_action->Activation();
-	}
-	else
-	{
-		current_action = action;
-		current_action->Activation();
-	}
 }
 
 
 void ActionWorker::Reset()
 {
-	//TODO 7: Free all actions on the worker
+	//TODO 8: Free all actions on the worker
 	delete current_action;
 	current_action = nullptr;
 
@@ -182,15 +163,11 @@ void ActionWorker::Reset()
 	action_queue.clear();
 	//---
 
-	paused = false;
-	//Fany way of doing it
+
+	//Fancy way of doing it
 	//ResetQueue(&action_queue, &current_action);
 }
 
-void ActionWorker::ResetActive()
-{
-	ResetQueue(&action_queue, &current_action);
-}
 
 void ActionWorker::ResetQueue(std::list<Action*>* queue, Action ** current)
 {
@@ -210,12 +187,4 @@ void ActionWorker::ResetQueue(std::list<Action*>* queue, Action ** current)
 }
 
 
-void ActionWorker::Pause()
-{
-	paused = true;
-}
-void ActionWorker::Restart()
-{
-	paused = false;
-}
 ///----------------------------------------------
