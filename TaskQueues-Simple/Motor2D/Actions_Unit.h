@@ -15,7 +15,7 @@ class MoveUnitAction : public Action
 {
 public:
 	//Constructor -----------
-	MoveUnitAction(Unit* actor, const iPoint& destination) : Action(actor, TASK_U_MOVE), destination(destination)
+	MoveUnitAction(Unit* actor, const iPoint& destination) : Action(actor), destination(destination)
 	{
 	}
 

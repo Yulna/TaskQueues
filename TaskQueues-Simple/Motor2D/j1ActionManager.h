@@ -13,11 +13,7 @@ class MoveUnitAction;
 
 enum UNIT_TYPE;
 
-enum TASK_TYPE
-{
-	TASK_NONE = 0,
-	TASK_U_MOVE,
-};
+
 
 
 /// Class Action --------------------------------
@@ -27,17 +23,15 @@ class Action
 public:
 
 	//Set all the Actions to a list on the Entities manager to clean them up at closing the app.
-	Action(Entity* actor, TASK_TYPE type);
+	Action(Entity* actor);
 	~Action();
 
 protected:
 	//Since this class Action will be used purely for the AI on entities
 	//we store a pointer to the entity in the base class
 	Entity*					actor = nullptr;
-	TASK_TYPE				type = TASK_NONE;
 
 public:
-
 	//Returns false if the Action couldn't be activated
 	virtual bool Activation() { return true; }
 
@@ -45,10 +39,6 @@ public:
 	//if the action is in progress or it has ended
 	///Returns TRUE when the action finishes
 	virtual bool Execute()	{ return true; }
-
-
-	//Get methods -----------
-	TASK_TYPE GetType();
 
 };
 /// ---------------------------------------------
@@ -79,9 +69,6 @@ public:
 	//Clean all actionss of the worker
 	void Reset();
 	void ResetActive();
-
-	TASK_TYPE GetCurrentActionType() const;
-	Action* GetCurrentAction() const;
 
 	void Pause();
 	void Restart();

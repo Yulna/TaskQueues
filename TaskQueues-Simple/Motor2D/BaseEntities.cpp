@@ -934,12 +934,5 @@ uint Unit::GetExp() const
 	return exp;
 }
 
-std::vector<iPoint>* Unit::GetPath() const
-{
-	if (action_worker.GetCurrentActionType() != TASK_U_MOVE)
-		return nullptr;
-
-	return ((MoveUnitAction*)action_worker.GetCurrentAction())->GetPath();
-}
 // ----------------
 ///----------------------------------------------

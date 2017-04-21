@@ -5,7 +5,7 @@
 ///Class Action ---------------------------------
 //Base class to build action definitions
 //Constructors ========================
-Action::Action(Entity* actor, TASK_TYPE type) : actor(actor), type (type)
+Action::Action(Entity* actor) : actor(actor)
 {
 
 }
@@ -14,11 +14,6 @@ Action::Action(Entity* actor, TASK_TYPE type) : actor(actor), type (type)
 Action::~Action()
 {
 	actor = nullptr;
-}
-
-TASK_TYPE Action::GetType()
-{
-	return type;
 }
 /// ---------------------------------------------
 
@@ -214,20 +209,6 @@ void ActionWorker::ResetQueue(std::list<Action*>* queue, Action ** current)
 	queue->clear();
 }
 
-TASK_TYPE ActionWorker::GetCurrentActionType() const
-{
-	if (current_action != nullptr)
-	{
-		return current_action->GetType();
-	}
-
-	return TASK_TYPE::TASK_NONE;
-}
-
-Action * ActionWorker::GetCurrentAction() const
-{
-	return current_action;
-}
 
 void ActionWorker::Pause()
 {
