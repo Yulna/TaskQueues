@@ -17,7 +17,7 @@ enum UNIT_TYPE;
 
 
 /// Class Action --------------------------------
-//Action virtual class (are commands but not for the console)
+//Action virtual class
 class Action
 {
 public:
