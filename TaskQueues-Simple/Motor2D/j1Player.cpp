@@ -9,12 +9,7 @@
 
 #include "j1App.h"
 #include "j1Window.h"
-#include "j1Gui.h"
 #include "j1EntitiesManager.h"
-
-#include "UI_Element.h"
-#include "UI_Image.h"
-#include "UI_String.h"
 
 #include "Actions_Unit.h"
 
@@ -119,9 +114,6 @@ void MoveRed::Execute()
 bool j1Player::PostUpdate()
 {
 
-	//Draw Mouse Last one
-	if (SDL_ShowCursor(-1) == 0) App->gui->DrawMouseTexture();
-
 	return true;
 }
 
@@ -129,43 +121,3 @@ bool j1Player::CleanUp()
 {
 	return true;
 }
-
-void j1Player::GUI_Input(UI_Element* target, GUI_INPUT input)
-{
-
-
-	switch (input)
-	{
-	case UP_ARROW:
-		break;
-	case DOWN_ARROW:
-		break;
-	case LEFT_ARROW:
-		break;
-	case RIGHT_ARROW:
-		break;
-	case MOUSE_LEFT_BUTTON_DOWN:
-		break;
-	case MOUSE_LEFT_BUTTON_REPEAT:
-		break;
-	case MOUSE_LEFT_BUTTON_UP:
-		break;
-	case MOUSE_RIGHT_BUTTON:
-		break;
-	case MOUSE_IN: 
-		break;
-	case MOUSE_OUT:  
-		break;
-	case SUPR:
-		break;
-	case BACKSPACE:
-		break;
-	case ENTER:
-		break;
-	case TAB:
-		break;
-	default:
-		break;
-	}
-}
-

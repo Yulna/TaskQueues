@@ -6,7 +6,6 @@
 #include "j1Textures.h"
 #include "j1Render.h"
 #include "j1Window.h"
-#include "j1Gui.h"
 #include "j1Map.h"
 
 #include "j1EntitiesManager.h"
@@ -80,8 +79,6 @@ bool j1Scene::Start()
 	App->player->red_unit->SetPosition(red_pos.x, red_pos.y);
 
 
-
-	App->gui->ChangeMouseTexture(DEFAULT);
 	App->player->Enable();
 	App->entities_manager->Enable();
 

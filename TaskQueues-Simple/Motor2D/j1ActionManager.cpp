@@ -84,8 +84,8 @@ void ActionWorker::Update()
 	if (current_action != nullptr)
 	{
 		//TODO 6: 
-
-		//If the action ends (execute() == true) erase it
+		//Execute the action
+		//If the action ends (execute() == true) erase it and set it to null
 		if (current_action->Execute())
 		{
 			delete current_action;

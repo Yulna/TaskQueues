@@ -15,15 +15,8 @@ class Entity;
 class Unit;
 class Resource;
 class Building;
-class UI_String;
-class UI_Image;
 
 class Entity_Profile;
-class Selection_Panel;
-class Game_Panel;
-class Action_Panel;
-
-
 
 
 class InputTask
@@ -86,9 +79,6 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
-
-	// GUI_INPUT
-	void GUI_Input(UI_Element* target, GUI_INPUT input);
 
 private:
 

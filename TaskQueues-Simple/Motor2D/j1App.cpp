@@ -13,7 +13,6 @@
 #include "j1FileSystem.h"
 #include "j1Map.h"
 #include "j1Fonts.h"
-#include "j1Gui.h"
 #include "j1Animator.h"
 #include "j1EntitiesManager.h"
 #include "j1App.h"
@@ -36,7 +35,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	fs = new j1FileSystem();
 	map = new j1Map();
 	font = new j1Fonts();
-	gui = new j1Gui();
 	animator = new j1Animator();
 	entities_manager = new j1EntitiesManager();
 	player = new j1Player();
@@ -53,7 +51,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(font);
 	AddModule(pathfinding);
-	AddModule(gui);
 	AddModule(animator);
 	AddModule(action_manager);
 	AddModule(entities_manager);

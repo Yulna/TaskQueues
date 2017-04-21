@@ -3,8 +3,6 @@
 
 #include "p2Log.h"
 #include "j1App.h"
-#include "j1Gui.h"
-#include "UI_Text_Box.h"
 #include "j1Window.h"
 #include "SDL/include/SDL.h"
 
@@ -144,23 +142,10 @@ bool j1Input::PreUpdate()
 
 		case SDL_EventType::SDL_TEXTINPUT:
 		{
-			if (App->gui->ItemSelected != nullptr && App->gui->ItemSelected->GetUItype() == UI_TYPE::TEXT_BOX && event.text.text[0] != 'Â') {
-				((UI_Text_Box*)App->gui->ItemSelected)->PushTextSegment(event.text.text, ((UI_Text_Box*)App->gui->ItemSelected)->GetCursorPos());
-				((UI_Text_Box*)App->gui->ItemSelected)->SetCursorPos(((UI_Text_Box*)App->gui->ItemSelected)->GetCursorPos() + 1);
-			}
 		}
 		break;
 
 		case SDL_EventType::SDL_TEXTEDITING:
-
-			/*
-			Update the composition text.
-			Update the cursor position.
-			Update the selection length (if any).
-			*/
-			//composition = event.edit.text;
-			//cursor = event.edit.start;
-			//selection_len = event.edit.length;
 
 			break;
 

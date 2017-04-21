@@ -83,7 +83,6 @@
     <ClCompile Include="j1EntitiesManager.cpp" />
     <ClCompile Include="j1FileSystem.cpp" />
     <ClCompile Include="j1Fonts.cpp" />
-    <ClCompile Include="j1Gui.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
     <ClCompile Include="j1Audio.cpp" />
@@ -100,14 +99,6 @@
     <ClCompile Include="j1Window.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
     <ClCompile Include="j1ActionManager.cpp" />
-    <ClCompile Include="UI_Button.cpp" />
-    <ClCompile Include="UI_Element.cpp" />
-    <ClCompile Include="UI_Fixed_Button.cpp" />
-    <ClCompile Include="UI_Image.cpp" />
-    <ClCompile Include="UI_Popup_Menu.cpp" />
-    <ClCompile Include="UI_Scroll.cpp" />
-    <ClCompile Include="UI_String.cpp" />
-    <ClCompile Include="UI_Text_Box.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Iso_Primitives.h" />
@@ -115,7 +106,6 @@
     <ClInclude Include="j1Animator.h" />
     <ClInclude Include="j1FileSystem.h" />
     <ClInclude Include="j1Fonts.h" />
-    <ClInclude Include="j1Gui.h" />
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1Pathfinding.h" />
     <ClInclude Include="j1PerfTimer.h" />
@@ -136,14 +126,6 @@
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
     <ClInclude Include="j1ActionManager.h" />
-    <ClInclude Include="UI_Button.h" />
-    <ClInclude Include="UI_Element.h" />
-    <ClInclude Include="UI_Fixed_Button.h" />
-    <ClInclude Include="UI_Image.h" />
-    <ClInclude Include="UI_Popup_Menu.h" />
-    <ClInclude Include="UI_Scroll.h" />
-    <ClInclude Include="UI_String.h" />
-    <ClInclude Include="UI_Text_Box.h" />
     <ClInclude Include="Actions_Unit.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
