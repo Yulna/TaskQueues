@@ -125,6 +125,9 @@ The .zip file with the code includes a .jpg of the diagram below for a better vi
 
 ![action_worker_flow](https://raw.githubusercontent.com/Yulna/TaskQueues/master/web_images/actionworker%20flow.jpg)
 
+When the worker logic is done it should act more or less like this representation:
+
+![action_worker_gif](https://raw.githubusercontent.com/Yulna/TaskQueues/master/web_images/worker_gif.gif)
 
 ## Input exercices 
 For the input part there is only 2 small exercises to gain some confidence when dealing with tasks, the objective here is to understand how tasks works and how to replace functions with task, so you should look at the j1Player.h file to see the base task named as InputTask and his 2 childs MoveBlue and MoveRed. 
