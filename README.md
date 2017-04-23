@@ -117,11 +117,11 @@ The .zip file with the code includes a .jpg of the diagram below for a better vi
 ![action_worker_flow](https://raw.githubusercontent.com/Yulna/TaskQueues/master/web_images/actionworker%20flow.jpg)
 
 
-## Exercices 
-
-### Input
+## Input exercices 
 For the input part there is only 2 small exercises to gain some confidence when dealing with tasks, the objective here is to understand how tasks works and how to replace functions with task, so you should look at the j1Player.h file to see the base task named as InputTask and his 2 childs MoveBlue and MoveRed. 
 Player also has 2 pointers to the base class, during the player Start() you can see that left_click is assigned to a MoveBlue task and the right_click is assigned to the MoveRed task.
+
+At the end of this parts you should have a code that prints  “Moving red...” or “Moving blue...” in the visual output console depending on which mouse key you pressed, and the user should be able to swap those functions pressing [Q].
 
 ```
 bool j1Player::Start()
@@ -143,8 +143,10 @@ The actual move will be done later on the AI part.
 In this exercise you only have to do a simple data swap between the two task pointers, if you have done it right each time you press [Q] the text printed in the output window when clicking should be reversed, for example since we have assigned the MoveBlue to the left_click pointer when we click with the mouse left button the text printed is “Moving blue...” but when we press [Q] the text printed should be “Moving red...”
 
 
-### AI
+## AI exercices 
 Before starting the AI exercice make sure you understand the basic concept behind tasks, since all the work done here will exploit them. As stated in the text above we will refer to the AI specific tasks as Actions.
+
+At the end of this part the blue and red characters should move where at the mouse cursor depending on which input the user presses, and the user should be able to make a predefined path and the the unit will follow it.
 
 In the TODO’s 3 and 4 we will complete the MoveUnitAction so it can receive a iPoint as destination and move according to a path.
 
@@ -183,6 +185,8 @@ Here we will have to make the code that Executes the current_action that is taki
 Here we will free the worker from all actions, it is important to do so since if we didn’t do it we will have to wait until the unit has ended our first command before actually doing the next one.
 
 
+**TODO 9:**   
+Just uncomment the code, the lines commented will use the functions that we created during the AI part and give to the blue and red units the Actions for them to move.
 
 ## Credits
 
