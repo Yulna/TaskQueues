@@ -49,6 +49,7 @@ public:
 	{
 		//TODO 4: Fill the Execute() method
 		//Easy one, just call the Move method in the Unit class, the Move method already returns true when it ends the path
+		//To acces the Move() method you first have to cast the actor to unit, write "((Unit*)actor)" instead of "actor"
 		return ((Unit*)actor)->Move(path);
 	}
 
