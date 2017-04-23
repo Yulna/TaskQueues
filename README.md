@@ -234,7 +234,7 @@ Virtual file system was made using [Physfs](https://icculus.org/physfs/) library
 
 ## Sources & Additional information
 
-http://gameprogrammingpatterns.com/command.html  (A very good and complete guide on how to use the Command pattern focused on input implementation)
+[](http://gameprogrammingpatterns.com/command.html)  (A very good and complete guide on how to use the Command pattern focused on input implementation)
 
 
-https://www.youtube.com/watch?v=22n06z0rq4c  (Personally at my current level I didn’t understand quite well most of the concepts on this video, but it gives interesting information than can be applied to our task management worker)
+[](https://www.youtube.com/watch?v=22n06z0rq4c)  (Personally at my current level I didn’t understand quite well most of the concepts on this video, but it gives interesting information than can be applied to our task management worker)
