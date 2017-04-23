@@ -222,11 +222,19 @@ If you wish to experiment in the multithread worker I have left the separate met
 
 ## Credits
 
+Thanks to the [DemonRealm](https://github.com/DeamonRealm) team for letting me use an adaptation of their game for the exercices.
+
+This software was made using [SDL](https://www.libsdl.org/) libraries.   
+
+This software is based on [pugixml](http://pugixml.org) library.
+pugixml is Copyright (C) 2006-2015 Arseny Kapoulkine. 
+
+Virtual file system was made using [Physfs](https://icculus.org/physfs/) library. 
 
 
 ## Sources & Additional information
 
-http://gameprogrammingpatterns.com/command.html  (A very good and complete guide on how to use the Command pattern)
+http://gameprogrammingpatterns.com/command.html  (A very good and complete guide on how to use the Command pattern focused on input implementation)
 
 
 https://www.youtube.com/watch?v=22n06z0rq4c  (Personally at my current level I didn’t understand quite well most of the concepts on this video, but it gives interesting information than can be applied to our task management worker)
