@@ -22,6 +22,7 @@ The fact of encapsulating the function and all the variables it need to be perfo
 Also a visual studio project is provided to do the exercices at the end of the page, those exercices are related to the command patter and might help you understand it, an exe file + another visual studio project with the solution are also provided.  
 The objective of doing those exercice is to make the program able to move the 2 characters than appear with mouse clicks, the left click should move one of them and the right click should move the other, the porgram should also be able to swap the keybindings when pressing [Q].
 
+![solution gif](https://raw.githubusercontent.com/Yulna/TaskQueues/master/web_images/TaskQueues_solution.gif)
 
 ## Input via Command pattern
 In any game we need to read the user input and turn it to some meaningful action on our game.  One of the simplest ways of doing so is to call a function when the key is pressed.
@@ -149,6 +150,11 @@ The actual move will be done later on the AI part.
 
 **TODO 2:**  
 In this exercise you only have to do a simple data swap between the two task pointers, if you have done it right each time you press [Q] the text printed in the output window when clicking should be reversed, for example since we have assigned the MoveBlue to the left_click pointer when we click with the mouse left button the text printed is “Moving blue...” but when we press [Q] the text printed should be “Moving red...”
+
+Basically we have to do this:
+
+![example 1](https://raw.githubusercontent.com/Yulna/TaskQueues/master/web_images/click_todo2.jpg)
+![example 1](https://raw.githubusercontent.com/Yulna/TaskQueues/master/web_images/click_todo.jpg)
 
 
 ## AI exercices 
