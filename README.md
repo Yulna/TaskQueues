@@ -184,6 +184,7 @@ During the TODO’s 5,6,7 and 8 we will work with the action worker and see how 
 **TODO 5:**   
 This is also a simple todo, we just have to add the action we receive to the Action* list that the worker has.
 
+![add_action gif](https://raw.githubusercontent.com/Yulna/TaskQueues/master/web_images/add_actions_gif.gif)
 
 **TODO 6:**   
 For this TODO is highly recommended that you use the actionworker_flow.jpg as guide for a better understanding.
@@ -191,16 +192,20 @@ For this TODO is highly recommended that you use the actionworker_flow.jpg as gu
 In this TODO we must check if the worker has or not some Action in the list waiting to be done (see that it has already checked if we are doing an action or not right now). If we find that one or more Actions are waiting in the list we will pass the data of the first action to the current_action pointer and remove the first action from the list.
 As a second step we shall check if the Action has activated correctly and if it is not the case delete it and set the current_action to null.
 
+![activation gif](https://raw.githubusercontent.com/Yulna/TaskQueues/master/web_images/activation_gif.gif)
+
 
 **TODO 7:**   
 For this TODO is highly recommended that you use the actionworker_flow.jpg as guide for a better understanding.
 
 Here we will have to make the code that Executes the current_action that is taking place, note that we have already checked if we have a current_action. This time it will not be as simple as when we did the Input part since here we have to check if the action has been completed and delete it when it happens.
 
+![execute gif](https://raw.githubusercontent.com/Yulna/TaskQueues/master/web_images/execute_gif.gif)
 
 **TODO 8:**   
 Here we will free the worker from all actions, it is important to do so since if we didn’t do it we will have to wait until the unit has ended our first command before actually doing the next one.
 
+![reset gif](https://raw.githubusercontent.com/Yulna/TaskQueues/master/web_images/reset_gif.gif)
 
 **TODO 9:**   
 Just uncomment the code, the lines commented will use the functions that we created during the AI part and give to the blue and red units the Actions for them to move.
