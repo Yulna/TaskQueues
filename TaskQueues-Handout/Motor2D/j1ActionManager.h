@@ -65,17 +65,6 @@ public:
 
 	//Clean all actionss of the worker
 	void Reset();
-
-
-private:
-
-	///These are called by the public functions
-	//Makes the Actions do their Execute and Activation
-	//Returns true if the current action has been executed correctly
-	bool DoWork(std::list<Action*>* queue, Action** current);
-
-	//Resets a list and their current  action	
-	void ResetQueue(std::list<Action*>* queue, Action** current);
 };
 ///----------------------------------------------
 

@@ -62,12 +62,12 @@ bool j1Player::PreUpdate()
 	//TODO 1: Execute the left and right click tasks------------------
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
-		if(left_click != nullptr) left_click->Execute();
+
 	}
 	
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
-		if (right_click != nullptr)	right_click->Execute();
+
 	}
 	//-----------------------------------------------------------------
 
@@ -75,9 +75,9 @@ bool j1Player::PreUpdate()
 	//TODO 2:Swap the right and left click functionality
 	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
 	{
-		InputTask* temp = left_click;
-		left_click = right_click;
-		right_click = temp;
+
+
+
 	}
 	//------------------------------------------------------------------
 	
@@ -90,7 +90,7 @@ void MoveBlue::Execute()
 	LOG("Moving blue...");
 	
 	//TODO 9: Uncomment this when you have finished the AI part
-
+	/*
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	
@@ -100,6 +100,7 @@ void MoveBlue::Execute()
 		App->player->blue_unit->GetWorker()->Reset();
 
 	App->player->blue_unit->AddAction(App->action_manager->MoveAction(App->player->blue_unit, iPoint(x - App->render->camera.x, y - App->render->camera.y)));
+	*/
 	//------------------------------------------------------------
 }
 
@@ -109,6 +110,7 @@ void MoveRed::Execute()
 
 
 	//TODO 9: Uncomment this when you have finished the AI part
+	/*
 	int x, y;
 	App->input->GetMousePosition(x, y);
 
@@ -118,6 +120,7 @@ void MoveRed::Execute()
 		App->player->red_unit->GetWorker()->Reset();
 
 	App->player->red_unit->AddAction(App->action_manager->MoveAction(App->player->red_unit, iPoint(x - App->render->camera.x, y - App->render->camera.y)));
+	*/
 	//----------------------------------------------------------
 }
 

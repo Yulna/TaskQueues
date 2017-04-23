@@ -32,16 +32,18 @@ public:
 		//TODO 3: Fill the activation method---------------------------------------
 		//We need to store the actual position of the entity as origin and calculate a path to the destination
 		///App->pathfinding->SimpleAstar(...) will return us an iPoint vector to use as path
-		iPoint origin(actor->GetPosition().x, actor->GetPosition().y);
-		path = App->pathfinding->SimpleAstar(origin, destination);
+
+
 
 		//If we don't get a valid path return false to indicate that activation has failed
-		if (path == nullptr)return false;
-		
+
+
+
 
 		//Animation methods uncomment it when Activation is done
-		((Unit*)actor)->SetAction(WALK);
-		((Unit*)actor)->Focus(path->back(),true);
+
+		//((Unit*)actor)->SetAction(WALK);
+		//((Unit*)actor)->Focus(path->back(),true);
 		return true;
 	}
 
@@ -50,7 +52,8 @@ public:
 		//TODO 4: Fill the Execute() method
 		//Easy one, just call the Move method in the Unit class, the Move method already returns true when it ends the path
 		//To acces the Move() method you first have to cast the actor to unit, write "((Unit*)actor)" instead of "actor"
-		return ((Unit*)actor)->Move(path);
+
+		return true;
 	}
 
 	//Returns the path 
