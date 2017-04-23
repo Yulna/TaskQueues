@@ -87,7 +87,6 @@
     <ClCompile Include="j1Animator.cpp" />
     <ClCompile Include="j1EntitiesManager.cpp" />
     <ClCompile Include="j1FileSystem.cpp" />
-    <ClCompile Include="j1Fonts.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
     <ClCompile Include="j1Audio.cpp" />
@@ -110,7 +109,6 @@
     <ClInclude Include="BaseEntities.h" />
     <ClInclude Include="j1Animator.h" />
     <ClInclude Include="j1FileSystem.h" />
-    <ClInclude Include="j1Fonts.h" />
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1Pathfinding.h" />
     <ClInclude Include="j1PerfTimer.h" />

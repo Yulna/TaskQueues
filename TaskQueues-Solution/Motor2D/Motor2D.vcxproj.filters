@@ -34,9 +34,6 @@
     <ClCompile Include="j1PerfTimer.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
-    <ClCompile Include="j1Fonts.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="p2Log.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
@@ -100,9 +97,6 @@
     </ClInclude>
     <ClInclude Include="j1PerfTimer.h">
       <Filter>Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Fonts.h">
-      <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="p2Point.h">
       <Filter>Tools</Filter>

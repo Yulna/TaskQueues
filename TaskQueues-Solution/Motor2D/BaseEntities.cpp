@@ -4,7 +4,6 @@
 #include "j1Render.h"
 #include "j1Animator.h"
 #include "j1Pathfinding.h"
-#include "j1Fonts.h"
 #include "j1Map.h"
 #include "p2Log.h"
 #include "j1EntitiesManager.h"
