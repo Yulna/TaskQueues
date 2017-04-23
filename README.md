@@ -194,6 +194,16 @@ Here we will free the worker from all actions, it is important to do so since if
 **TODO 9:**   
 Just uncomment the code, the lines commented will use the functions that we created during the AI part and give to the blue and red units the Actions for them to move.
 
+
+## Multithread suggestion
+You can try to do the functionality of the worker Update() and Reset() in a separate method that receives a list of actions and a pointer to an action, with that you can simplify your update just by calling this new method and passing the actions list and current action you want in just one line.  
+
+If you set it up this way it is possible to make a multithread worker by adding more pointers to action, one for each thread of work you like to have, you can even add diferent lists so each list contains a concrete type of action and update them depending on each other.
+
+For example if you want to make some unit autoatack in a videogame you could add a diferent action list that for passive action and another list for active actions, then you could use the active list to send actions such as move or attack that the player sends, and the passive list for actions such as autoattack that take place when the player isn't sending any command. If you have set it this way you could check if the worker is executing any actions from the active list and if it isn't execute the actions on the passive list. 
+
+If you wish to experiment in the multithread worker I have left the separate methods and how to call them in the Solution folder of this repository if you need help in passing the Update() and Reset() functionallity to diferent methods.
+
 ## Credits
 
 
