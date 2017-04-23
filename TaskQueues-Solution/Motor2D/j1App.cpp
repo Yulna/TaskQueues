@@ -254,7 +254,7 @@ void j1App::FinishUpdate()
 	}
 	else
 	{
-		sprintf_s(title, 50, "Age Of Champions");
+		sprintf_s(title, 50, "Task queues and managament oriented to videogames");
 	}
 
 	App->win->SetTitle(title);
