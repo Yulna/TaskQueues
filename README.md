@@ -35,6 +35,8 @@ From that base class we will create different subclasses for each command we nee
 
 Now we can create and store pointers to the base class so we can operate with this functions as objects by calling them via “task_pointer->Execute”  and easily exchange them.
 
+![example 1](https://raw.githubusercontent.com/Yulna/TaskQueues/master/web_images/click_example.jpg)
+![exapmle 2](https://raw.githubusercontent.com/Yulna/TaskQueues/master/web_images/click_example2.jpg)
 
 
 ## Command patterns on AI
