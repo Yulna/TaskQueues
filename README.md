@@ -3,7 +3,7 @@
 To start talking about task managment first we must define what is a task.
 Tasks can be defined as an encapsulation of a function inside an object.
 
-To clarify this part, what i’m trying to say is that when using task we want to transform our functions or methods into classes so we will be able to use object operators with them. 
+To clarify this part, what i’m trying to say is that when using tasks we want to transform our functions or methods into classes so we will be able to use object operators with them. 
 This might be a little confusing so take a look at the example below to understand it better, what we want to do is call the function we encapsulated in the Execute() method, so we have an access to the function and also we can treat is as an object.
 
 ```
@@ -16,6 +16,12 @@ public:
 	virtual void Execute() {};
 };
 ``` 
+
+The fact of encapsulating the function and all the variables it need to be performed it's known as Command pattern, and is incredibly useful, at least to me, when dealing whit users inputs or AI in videogames. In the notes below I will try to show you how I personally have used them in my projects, it may not be the best way of doing it nut I hope at least it serves a guide on how to use the command pattern.
+
+Also a visual studio project is provided to do the exercices at the end of the page, those exercices are related to the command patter and might help you understand it, an exe file + another visual studio project with the solution are also provided.  
+The objective of doing those exercice is to make the program able to move the 2 characters than appear with mouse clicks, the left click should move one of them and the right click should move the other, the porgram should also be able to swap the keybindings when pressing [Q].
+
 
 ## Input via Command pattern
 In any game we need to read the user input and turn it to some meaningful action on our game.  One of the simplest ways of doing so is to call a function when the key is pressed.
@@ -189,6 +195,8 @@ Here we will free the worker from all actions, it is important to do so since if
 Just uncomment the code, the lines commented will use the functions that we created during the AI part and give to the blue and red units the Actions for them to move.
 
 ## Credits
+
+
 
 ## Sources & Additional information
 
